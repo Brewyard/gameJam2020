@@ -1,50 +1,47 @@
 import pygame
-from pygame.locals import *
-
 pygame.init()
-pygame.display.set_caption('End credits')
-screen = pygame.display.set_mode((800, 600))
-screen_r = screen.get_rect()
-font = pygame.font.SysFont("Arial", 40)
-clock = pygame.time.Clock()
+from game import Game
 
-def main():
+#Generer la fenetre de notre jeu
+windowSize = (800,600)
+origin = (0,0)
+screen = pygame.display.set_mode(windowSize)
+rect = pygame.Rect(origin,windowSize)
+image = pygame.Surface(windowSize)
+launch = True
+imageMenu = pygame.image.load("../Images/background_Menu.jpg")
 
-    credit_list = ["CREDITS - The Departed"," ","Leonardo DiCaprio - Billy","Matt Damon - Colin Sullivan", "Jack Nicholson - Frank Costello", "Mark Wahlberg - Dignam", "Martin Sheen - Queenan"]
+#chargement du jeu
+game = Game()
+while launch:
+    print(game.pressed)
+    #deplacement de la bulle(player) avec collision aux murs
+    if game.pressed.get(pygame.K_LEFT) and game.player.rect.x + 55 > 0:
+        game.player.move_left()
+    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x - 40  < 600  :
+        game.player.move_right()
+    if game.pressed.get(pygame.K_SPACE):
+        game.player.move_up()
 
-    texts = []
-    # we render the text once, since it's easier to work with surfaces
-    # also, font rendering is a performance killer
-    for i, line in enumerate(credit_list):
-        s = font.render(line, 1, (10, 10, 10))
-        # we also create a Rect for each Surface.
-        # whenever you use rects with surfaces, it may be a good idea to use sprites instead
-        # we give each rect the correct starting position
-        r = s.get_rect(centerx=screen_r.centerx, y=screen_r.bottom + i * 45)
-        texts.append((r, s))
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            launch = False
+            pygame.quit()
+            exit()
+        elif event.type == pygame.KEYDOWN:
+            game.pressed[event.key] = True
+        elif event.type == pygame.KEYUP:
+            game.pressed[event.key] = False
 
-    while True:
-        for e in pygame.event.get():
-            if e.type == QUIT or e.type == KEYDOWN and e.key == pygame.K_ESCAPE:
-                return
+    screen.blit(imageMenu, rect)
+    screen.blit(game.player.image,game.player.rect)
+    #pygame.display.flip()
+    pygame.display.update()
 
-        screen.fill((255, 255, 255))
 
-        for r, s in texts:
-            # now we just move each rect by one pixel each frame
-            r.move_ip(0, -1)
-            # and drawing is as simple as this
-            screen.blit(s, r)
 
-        # if all rects have left the screen, we exit
-        if not screen_r.collidelistall([r for (r, _) in texts]):
-            return
 
-        # only call this once so the screen does not flicker
-        pygame.display.flip()
 
-        # cap framerate at 60 FPS
-        clock.tick(60)
 
-if __name__ == '__main__':
-    main()
+
+
