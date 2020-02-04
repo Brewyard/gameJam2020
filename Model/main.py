@@ -47,7 +47,6 @@ def gameOver():
     time.sleep(1)
 
 
-
 # boucle principale
 def playing():
     intervalleAleatoire = random.randint(1, 100)
@@ -62,7 +61,7 @@ def playing():
         if compteTours == intervalleAleatoire:
             movingBackground.generateObstacles()
             compteTours = 0
-            intervalleAleatoire = random.randint(1, 1000)
+            intervalleAleatoire = random.randint(1, 100)
 
         for obstacle in movingBackground.obstacles:
             obstacle.fall()
@@ -70,6 +69,7 @@ def playing():
 
         # si bulle touche obstacle
         if movingBackground.windTouch(game.player.rect):
+            # souffler de l'air sur la bulle
             return
 
         # deplacement de la bulle(player) avec collision aux murs
