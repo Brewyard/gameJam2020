@@ -13,11 +13,15 @@ class Player(pygame.sprite.Sprite):
         self.pointVie = 10
 
     # mouvement pour les niveaux verticaux (deplacement gauche/droite)
-    def move_right(self):
-        self.rect.x = self.rect.x + self.velocity
+    def move_right(self, force=None):
+        if force is None:
+            force = 0
+        self.rect.x = self.rect.x + self.velocity + force
 
-    def move_left(self):
-        self.rect.x = self.rect.x - self.velocity
+    def move_left(self, force=None):
+        if force is None:
+            force = 0
+        self.rect.x = self.rect.x - self.velocity - force
 
     # mouvement pour niveaux horizontaux (deplacement haut/bas)
     def move_down(self):

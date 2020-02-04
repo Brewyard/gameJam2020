@@ -8,6 +8,8 @@ class MovingBackground:  # avec un sprite après
         self.obstacles = []
         self.area = pygame.display.get_surface().get_rect()
         self.generateObstacles()
+        self.windDirection = 0 # O pour souffle vers la gauche et 1 pour souffle vers la droite
+        self.windForce = 0;
 
     def generateObstacles(self):
         if len(self.obstacles) > 20:
@@ -27,4 +29,9 @@ class MovingBackground:  # avec un sprite après
         for obstacle in self.obstacles:
             if obstacle.windTouch2(target):
                 touch = True
+                if obstacle.rect.left == 0: # c'est un souffle vers la droite
+                    self.windDirection = 1
+                else:
+                    self.windDirection = 0
+                self.windForce = obstacle.rect.width / 100
         return touch

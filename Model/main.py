@@ -51,6 +51,9 @@ def gameOver():
 def playing():
     intervalleAleatoire = random.randint(1, 100)
     compteTours = 0
+    souffle = False
+    secondesDeSouffle = 0
+    debut_souffle = pygame.time.get_ticks()
     while launch:
         clock.tick(60)
         # game.menu(screen)
@@ -70,13 +73,27 @@ def playing():
         # si bulle touche obstacle
         if movingBackground.windTouch(game.player.rect):
             # souffler de l'air sur la bulle
-            return
+            souffle = True
+            debut_souffle = pygame.time.get_ticks()
+            secondesDeSouffle = 0
 
         # deplacement de la bulle(player) avec collision aux murs
-        if game.pressed.get(pygame.K_LEFT):
-            game.player.move_left()
-        if game.pressed.get(pygame.K_RIGHT):
-            game.player.move_right()
+        if souffle and secondesDeSouffle < 1:  # il ne peut pas se deplacer le temps du souffle
+            if movingBackground.windDirection == 0:  # souffle à gauche
+                game.player.move_left(movingBackground.windForce)
+            else:
+                game.player.move_right(movingBackground.windForce)
+        else:
+            if game.pressed.get(pygame.K_LEFT):
+                game.player.move_left()
+            if game.pressed.get(pygame.K_RIGHT):
+                game.player.move_right()
+            souffle = False
+
+        if game.pressed.get(pygame.K_SPACE):
+            # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
+
+
         if rect.contains(game.player.rect):
             riendutout = 0
         else:
@@ -94,3 +111,6 @@ def playing():
         screen.blit(game.player.image, game.player.rect)
         pygame.display.update()
         compteTours += 1
+
+        if souffle:
+            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000
