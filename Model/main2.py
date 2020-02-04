@@ -8,7 +8,7 @@ selector = 1
 placement = 200
 def drawMenu():
     #Generer la fenetre de notre jeu
-    windowSize = (800,600)
+    windowSize = (800, 600)
     origin = (0,0)
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin,windowSize)

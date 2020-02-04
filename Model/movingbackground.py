@@ -10,6 +10,8 @@ class MovingBackground:  # avec un sprite après
         self.generateObstacles()
 
     def generateObstacles(self):
+        if len(self.obstacles) > 10:
+            self.obstacles = self.obstacles[4:]
         i = 0
         while i < random.randint(1, 2):
             obstacle = Obstacle(1)
@@ -24,7 +26,8 @@ class MovingBackground:  # avec un sprite après
         self.generateObstacles()
 
     def windTouch(self, target):
+        print(self.obstacles)
         touch = False
         for obstacle in self.obstacles:
-            touch = obstacle.windTouch(target)
+            touch = obstacle.windTouch2(target)
         return touch

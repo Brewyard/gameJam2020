@@ -24,6 +24,7 @@ windy_today = pygame.mixer.Sound('../Sounds/wind.wav')
 background_music = pygame.mixer.Sound('../Sounds/yes.wav')
 # chargement du jeu
 game = Game()
+clock = pygame.time.Clock()
 
 # generation background
 movingBackground = MovingBackground()
@@ -46,41 +47,45 @@ def gameOver():
     time.sleep(1)
 
 
+
 # boucle principale
 def playing():
+    intervalleAleatoire = random.randint(1, 100)
+    compteTours = 0
     while launch:
+        clock.tick(60)
         # game.menu(screen)
         # background_music.play()
         screen.blit(imageJeu, rect)
         # creation obstacles
         # intervalle random de temps pour la generation d'obstacle
-        # intervalle = random.randint(1, 100)
-        # if intervalle > 99:
-        # movingBackground.generateObstacles()
+        if compteTours == intervalleAleatoire:
+            movingBackground.generateObstacles()
+            compteTours = 0
+            intervalleAleatoire = random.randint(1, 1000)
+
         for obstacle in movingBackground.obstacles:
             obstacle.fall()
-            screen.blit(obstacle.img, obstacle.pos)
+            screen.blit(obstacle.img, obstacle.rect)
 
         # si bulle touche obstacle
-        if movingBackground.windTouch(game.player):
+        if movingBackground.windTouch(game.player.rect):
             return
 
         # deplacement de la bulle(player) avec collision aux murs
-        if game.pressed.get(pygame.K_LEFT) and game.player.rect.x + 55 > 0:
-            if game.player.rect.x - 40 <= 0:  # methode contient dans la windows ??
-                gameOver()
+        if game.pressed.get(pygame.K_LEFT):
             game.player.move_left()
-        if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x - 40 < 600:
-            if game.player.rect.x - 40 >= 590:
-                gameOver()
+        if game.pressed.get(pygame.K_RIGHT):
             game.player.move_right()
+        if rect.contains(game.player.rect):
+            riendutout = 0
+        else:
+            gameOver()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            elif event.key == pygame.K_ESCAPE:
-                return
             elif event.type == pygame.KEYDOWN:
                 game.pressed[event.key] = True
             elif event.type == pygame.KEYUP:
@@ -88,3 +93,4 @@ def playing():
 
         screen.blit(game.player.image, game.player.rect)
         pygame.display.update()
+        compteTours += 1
