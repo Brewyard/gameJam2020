@@ -3,10 +3,10 @@ pygame.init()
 from game import Game
 
 #Color
-transparent = (0,0,0,0)
+transparent = (0, 0, 0, 0)
 #Generer la fenetre de notre jeu
-windowSize = (800,600)
-origin = (0,0)
+windowSize = (800, 600)
+origin = (0, 0)
 screen = pygame.display.set_mode(windowSize)
 rect = pygame.Rect(origin,windowSize)
 image = pygame.Surface(windowSize)
