@@ -4,7 +4,7 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load('../Images/perso (1).png')
+        self.image = pygame.image.load('../Images/bulle_redim.png')
         self.rect = self.image.get_rect()  # permet de recuperer les coordonnees du player
         self.rect.x = 300
         self.rect.y = 300
