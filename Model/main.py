@@ -11,7 +11,8 @@ screen = pygame.display.set_mode(windowSize)
 rect = pygame.Rect(origin,windowSize)
 image = pygame.Surface(windowSize)
 imageJeu = pygame.image.load("../Images/background_Menu.jpg")
-
+FPS = 60
+clock = pygame.time.Clock()
 launch = True
 menu = True
 jeu = False
@@ -40,6 +41,7 @@ def gameOver():
 while launch:
     #game.menu(screen)
     #background_music.play()
+
     # deplacement de la bulle(player) avec collision aux murs
     if game.pressed.get(pygame.K_LEFT) and game.player.rect.x + 55 > 0:
         if game.player.rect.x - 40 <= 0: #methode contient dans la windows ??
@@ -49,6 +51,11 @@ while launch:
         if game.player.rect.x - 40 >= 590:
             gameOver()
         game.player.move_right()
+
+    all_sprites = pygame.sprite.Group(game.player.image)  # Creates a sprite group and adds 'player' to it.
+    dt = clock.tick(FPS) / 1000.0  # Amount of seconds between each loop.
+    all_sprites.update(dt)  # Calls the 'update' method on all sprites in the list (currently just the player).
+    all_sprites.draw(screen)
 
 
     for event in pygame.event.get():
