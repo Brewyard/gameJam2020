@@ -48,28 +48,25 @@ def gameOver():
     pygame.display.flip()
     time.sleep(1)
 
-
-
 #boucle principale
 def playing():
     while launch:
-
         #game.menu(screen)
         #background_music.play()
         screen.blit(imageJeu, rect)
-        obstacle = Obstacle(1)
-        screen.blit(obstacle.img, (500, 400))
-        if game.player.rect.x == obstacle.rect.x and game.player.rect.y == obstacle.rect.y:
-            print("CA MARCHE")
         #creation obstacles
         # intervalle random de temps pour la generation d'obstacle
-        intervalle = random.randint(1, 100)
-        if intervalle > 99:
-            movingBackground.generateObstacles()
+        # intervalle = random.randint(1, 100)
+        # if intervalle > 99:
+            # movingBackground.generateObstacles()
         for obstacle in movingBackground.obstacles:
             obstacle.fall()
             screen.blit(obstacle.img, obstacle.pos)
-        print(obstacle.windTouch(game.player.rect))
+
+        # si bulle touche obstacle
+        if movingBackground.windTouch(game.player):
+            return
+
 
         # deplacement de la bulle(player) avec collision aux murs
         if game.pressed.get(pygame.K_LEFT) and game.player.rect.x + 55 > 0:
