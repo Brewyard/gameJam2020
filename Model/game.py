@@ -4,6 +4,9 @@ Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
 Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
 
 import pygame
+
+selector = 1
+placement = 200
 class Game():
     def __init__(self):
         self.player = Player()
@@ -12,6 +15,8 @@ class Game():
             "touche fleche gauche": False,
             "touche fleche space" : False
         }
+
+
 
 
 
