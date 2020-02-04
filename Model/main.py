@@ -1,6 +1,9 @@
 import pygame,time,random
 pygame.init()
 from game import Game
+from movingbackground import MovingBackground
+from obstacle import Obstacle
+
 
 #Color
 transparent = (0,0,0,0)
@@ -12,6 +15,10 @@ rect = pygame.Rect(origin,windowSize)
 image = pygame.Surface(windowSize)
 imageJeu = pygame.image.load("../Images/background_Menu.jpg")
 
+
+
+
+
 launch = True
 menu = True
 jeu = False
@@ -21,6 +28,11 @@ windy_today = pygame.mixer.Sound('../Sounds/wind.wav')
 background_music = pygame.mixer.Sound('../Sounds/yes.wav')
 #chargement du jeu
 game = Game()
+
+#generation background
+movingBackground = MovingBackground()
+movingBackground.generateObstacles()
+
 #game.menu(screen)
 
 def gameOver():
@@ -36,33 +48,54 @@ def gameOver():
     pygame.display.flip()
     time.sleep(1)
 
+
+
 #boucle principale
-while launch:
-    #game.menu(screen)
-    #background_music.play()
-    # deplacement de la bulle(player) avec collision aux murs
-    if game.pressed.get(pygame.K_LEFT) and game.player.rect.x + 55 > 0:
-        if game.player.rect.x - 40 <= 0: #methode contient dans la windows ??
-            gameOver()
-        game.player.move_left()
-    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x - 40 < 600:
-        if game.player.rect.x - 40 >= 590:
-            gameOver()
-        game.player.move_right()
+def playing():
+    while launch:
+
+        #game.menu(screen)
+        #background_music.play()
+        screen.blit(imageJeu, rect)
+        obstacle = Obstacle(1)
+        screen.blit(obstacle.img, (500, 400))
+        if game.player.rect.x == obstacle.rect.x and game.player.rect.y == obstacle.rect.y:
+            print("CA MARCHE")
+        #creation obstacles
+        # intervalle random de temps pour la generation d'obstacle
+        intervalle = random.randint(1, 100)
+        if intervalle > 99:
+            movingBackground.generateObstacles()
+        for obstacle in movingBackground.obstacles:
+            obstacle.fall()
+            screen.blit(obstacle.img, obstacle.pos)
+        print(obstacle.windTouch(game.player.rect))
+
+        # deplacement de la bulle(player) avec collision aux murs
+        if game.pressed.get(pygame.K_LEFT) and game.player.rect.x + 55 > 0:
+            if game.player.rect.x - 40 <= 0: #methode contient dans la windows ??
+                gameOver()
+            game.player.move_left()
+        if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x - 40 < 600:
+            if game.player.rect.x - 40 >= 590:
+                gameOver()
+            game.player.move_right()
 
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-        elif event.type == pygame.KEYDOWN:
-            game.pressed[event.key] = True
-        elif event.type == pygame.KEYUP:
-            game.pressed[event.key] = False
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT :
+                pygame.quit()
+                exit()
+            elif event.key == pygame.K_ESCAPE:
+                return
+            elif event.type == pygame.KEYDOWN:
+                game.pressed[event.key] = True
+            elif event.type == pygame.KEYUP:
+                game.pressed[event.key] = False
 
-    screen.blit(imageJeu, rect)
-    screen.blit(game.player.image,game.player.rect)
-    pygame.display.update()
+
+        screen.blit(game.player.image,game.player.rect)
+        pygame.display.update()
 
 
 
