@@ -11,6 +11,9 @@ class Player(pygame.sprite.Sprite):
         self.velocity = 5
         self.boost = 20
         self.pointVie = 10
+        self.resistanceVent = 0
+        self.width = self.rect.width
+        self.height = self.rect.height
 
     # mouvement pour les niveaux verticaux (deplacement gauche/droite)
     def move_right(self, force=None):
@@ -36,3 +39,20 @@ class Player(pygame.sprite.Sprite):
 
     def sprint_side(self):
         self.rect.x = self.rect.y + self.boost
+
+    def retrecirOuAgrandir(self, width, height):
+        if (width > 50):
+            self.image = pygame.transform.smoothscale(self.image, (width, height))
+            # sauvegarde x et y
+            sauvX = self.rect.x
+            sauvY = self.rect.y
+            self.rect = self.image.get_rect()
+            # replace x et y
+            self.rect.x = sauvX
+            self.rect.y = sauvY
+            self.width = self.rect.width
+            self.height = self.rect.height
+            return True
+        else:
+            # trop petite
+            return False

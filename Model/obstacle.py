@@ -11,8 +11,8 @@ class Obstacle:
         self.rect = self.img.get_rect().move(random.randint(0, 1) * (800 - longueurVent), 0)
         self.speed = speed
 
-    def fall(self):
-        self.rect = self.rect.move(0, self.speed)
+    def fall(self, vitesse):
+        self.rect = self.rect.move(0, self.speed + vitesse)
 
     def windTouch2(self, target):
         hitbox = self.rect.inflate(-5, -5)

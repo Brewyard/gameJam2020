@@ -17,9 +17,9 @@ class MovingBackground:  # avec un sprite après
         obstacle = Obstacle(1)
         self.obstacles.append(obstacle)
 
-    def fall(self):
+    def fall(self, vitesse):
         for obstacle in self.obstacles:
-            obstacle.fall()
+            obstacle.fall(vitesse)
 
     def addObstacles(self):
         self.generateObstacles()

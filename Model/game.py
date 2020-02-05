@@ -15,7 +15,7 @@ class Game():
             "touche fleche gauche": False,
             "touche fleche space" : False
         }
-
+        self.vitesse = 0
 
 
 

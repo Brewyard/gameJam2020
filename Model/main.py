@@ -66,8 +66,8 @@ def playing():
             compteTours = 0
             intervalleAleatoire = random.randint(1, 100)
 
+        movingBackground.fall(game.vitesse)
         for obstacle in movingBackground.obstacles:
-            obstacle.fall()
             screen.blit(obstacle.img, obstacle.rect)
 
         # si bulle touche obstacle
@@ -92,7 +92,11 @@ def playing():
 
         if game.pressed.get(pygame.K_SPACE):
             # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
-            riendutouttout = 0
+            ilPeut = game.player.retrecirOuAgrandir(game.player.width - 1, game.player.height - 1)  # retrecit bulle
+            if ilPeut:
+                game.vitesse += 1  # augmente vitesse
+        else:
+            game.vitesse = 0
 
         if rect.contains(game.player.rect):
             riendutout = 0
