@@ -15,7 +15,8 @@ origin = (0, 0)
 screen = pygame.display.set_mode(windowSize)
 rect = pygame.Rect(origin, windowSize)
 image = pygame.Surface(windowSize)
-imageJeu = pygame.image.load("../Images/background_Menu.jpg")
+imageJeu = pygame.image.load("../Images/background.png")
+imageJeu = pygame.transform.scale(imageJeu,(800,600))
 
 launch = True
 menu = True
