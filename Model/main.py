@@ -3,10 +3,11 @@ pygame.init()
 from game import Game
 from movingbackground import MovingBackground
 from obstacle import Obstacle
-
-
 selectorGameOver = 1
 placement = 300
+from utils_game import load_image
+from utils_game import PATH
+from utils_game import scale_image
 # Color
 transparent = (0, 0, 0, 0)
 # Generer la fenetre de notre jeu
@@ -15,7 +16,8 @@ origin = (0, 0)
 screen = pygame.display.set_mode(windowSize)
 rect = pygame.Rect(origin, windowSize)
 image = pygame.Surface(windowSize)
-imageJeu = pygame.image.load("../Images/background_Menu.jpg")
+imageJeu = pygame.image.load("../Images/background.png")
+imageJeu = pygame.transform.scale(imageJeu,(800,600))
 
 launch = True
 menu = True
@@ -29,8 +31,16 @@ game = Game()
 clock = pygame.time.Clock()
 
 # generation background
-movingBackground = MovingBackground()
-movingBackground.generateObstacles()
+imagesVent = [load_image(PATH + "vent1.png"), load_image(PATH + "vent2.png"), load_image(PATH + "vent3.png"),
+              load_image(PATH + "vent4.png"), load_image(PATH + "vent5.png"), load_image(PATH + "vent6.png"),
+              load_image(PATH + "vent7.png"), load_image(PATH + "vent8.png"), load_image(PATH + "vent9.png"),
+              load_image(PATH + "vent10.png"), load_image(PATH + "vent11.png"), load_image(PATH + "vent12.png"),
+              load_image(PATH + "vent13.png"), load_image(PATH + "vent14.png"), load_image(PATH + "vent15.png"),
+              load_image(PATH + "vent16.png")]
+
+movingBackground = MovingBackground(imagesVent)
+obstacle2 = movingBackground.generateObstacles()
+game.all_sprites.add(obstacle2)
 
 
 # game.menu(screen)
@@ -101,13 +111,14 @@ def playing(vitesseAcceleration):
         # creation obstacles
         # intervalle random de temps pour la generation d'obstacle
         if compteTours == intervalleAleatoire:
-            movingBackground.generateObstacles()
+            obstacle1 = movingBackground.generateObstacles()
             compteTours = 0
             intervalleAleatoire = random.randint(1, 100)
+            game.all_sprites.add(obstacle1)
 
         movingBackground.fall(game.vitesseAcceleration + game.vitesseBullePercee)
-        for obstacle in movingBackground.obstacles:
-            screen.blit(obstacle.img, obstacle.rect)
+        # for obstacle in movingBackground.obstacles:
+        #     screen.blit(obstacle.img, obstacle.rect)
 
         # si bulle touche obstacle
         if movingBackground.windTouch(game.player.rect):
@@ -179,3 +190,9 @@ def playing(vitesseAcceleration):
 
         if souffle:
             secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 100
+
+        if movingBackground.obstacles[0]:
+            if rect.contains(movingBackground.obstacles[0]):
+                rien = 0
+            else:
+                del movingBackground.obstacles[0]

@@ -14,14 +14,14 @@ selector = 1
 placement = 200
 class Game():
     def __init__(self):
-        images = [load_image(PATH + "bubble.png"), load_image(PATH + "bubble75horizon.png"), load_image(PATH + "bubble50horizon.png"),
+        imagesBulle = [load_image(PATH + "bubble.png"), load_image(PATH + "bubble75horizon.png"), load_image(PATH + "bubble50horizon.png"),
                   load_image(PATH + "bubble75horizon.png"), load_image(PATH + "bubble.png"), load_image(PATH + "bubble75verti.png"),
                   load_image(PATH + "bubble50verti.png"), load_image(PATH + "bubble75verti.png")]
-        imagesScaled = []
-        for image in images:
-            imagesScaled.append(scale_image(image, 100, 100))
+        imagesBulleScaled = []
+        for image in imagesBulle:
+            imagesBulleScaled.append(scale_image(image, 100, 100))
 
-        self.player = Player(imagesScaled)
+        self.player = Player(imagesBulleScaled)
         self.pressed = {
             "touche fleche droite" : True,
             "touche fleche gauche": False,
