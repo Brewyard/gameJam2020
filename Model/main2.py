@@ -9,7 +9,8 @@ Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
 selector = 1
 placement = 200
 game = Game()
-
+selectorLevels = 1
+selectorMenu = 1
 f = open('../highscore.txt', 'r')
 highscore = int(f.read())
 f.close()
@@ -19,40 +20,40 @@ def drawMenu():
     windowSize = (800, 600)
     origin = (0,0)
     global highscore
+    global selectorMenu
+    placement = 200
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin,windowSize)
     image = pygame.Surface(windowSize)
     imageJeu = pygame.image.load("../Images/background_Menu.jpg")
-    textTitre = Texty.render('XXX ', 0, (255, 0, 0))
+    textTitre = Texty.render('Bubble Escape ', 0, (255, 0, 0))
     textStart = Texty.render('start', 0, (255, 0, 0))
     textCredits = Texty.render('Credits', 0, (255, 0, 0))
     textQuit = Texty.render('quit ', 0, (255, 0, 0))
     textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
-    screen.blit(textTitre, (400, 150))
-    screen.blit(textStart, (400, 200))
-    screen.blit(textCredits, (400, 250))
-    screen.blit(textQuit, (400, 300))
+    screen.blit(textTitre, (300, 150))
+    screen.blit(textStart, (300, 200))
+    screen.blit(textCredits, (300, 250))
+    screen.blit(textQuit, (300, 300))
     screen.blit(textHighscore,(50,50))
-    if selector == 1:
+    if selectorMenu == 1:
         placement = 200
-    elif selector == 2:
+    elif selectorMenu == 2:
         placement = 250
-    elif selector == 3:
+    elif selectorMenu == 3:
         placement = 300
-    screen.blit(imageFleche,(350, placement))
+    screen.blit(imageFleche,(260, placement))
     pygame.display.update()
-
-
-Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
-Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
-selector = 1
-placement = 200
 
 
 
 def draw_levels():
+    Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
+    Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
+    placement = 200
+    global selectorLevels
     windowSize = (800, 600)
     origin = (0, 0)
     screen = pygame.display.set_mode(windowSize)
@@ -63,24 +64,27 @@ def draw_levels():
     textLevelNormal = Texty.render('Normal', 0, (255, 0, 0))
     textLevelPro = Texty.render('Pro', 0, (255, 0, 0))
     textLevelExpert = Texty.render('Expert', 0, (255, 0, 0))
-
+    textLevelRetour= Texty.render('Retour', 0, (0, 255, 0))
 
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche, (30, 30))
-    screen.blit(textLevelFacile, (400, 150))
-    screen.blit(textLevelNormal, (400, 200))
-    screen.blit(textLevelPro, (400, 250))
-    screen.blit(textLevelExpert, (400, 300))
+    screen.blit(textLevelFacile, (300, 150))
+    screen.blit(textLevelNormal, (300, 200))
+    screen.blit(textLevelPro, (300, 250))
+    screen.blit(textLevelExpert, (300, 300))
+    screen.blit(textLevelRetour, (300, 350))
 
-    if selector == 1:
+    if selectorLevels == 1:
         placement = 150
-    elif selector == 2:
+    elif selectorLevels == 2:
         placement = 200
-    elif selector == 3:
+    elif selectorLevels == 3:
         placement = 250
-    elif selector == 4:
+    elif selectorLevels == 4:
         placement = 300
-    screen.blit(imageFleche, (200, placement))
+    elif selectorLevels ==5:
+        placement = 350
+    screen.blit(imageFleche, (260, placement))
     pygame.display.update()
 
 
@@ -93,41 +97,49 @@ while run:
             exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                if selector != 1:
-                    selector -= 1
+                if selectorMenu != 1:
+                    selectorMenu -= 1
             elif event.key == pygame.K_DOWN:
-                if selector != 3:
-                    selector += 1
-            elif event.key == pygame.K_RETURN and selector == 1:
+                if selectorMenu != 3:
+                    selectorMenu += 1
+            elif event.key == pygame.K_RETURN and selectorMenu == 1:
                 truuuue = True
+                quitter = False
                 while truuuue:
-                    for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
+                    for e in pygame.event.get():
+                        if e.type == pygame.QUIT:
                             pygame.quit()
                             exit()
-                        elif event.type == pygame.KEYDOWN:
-                            if event.key == pygame.K_UP:
-                                if selector != 1:
-                                    selector -= 1
-                            elif event.key == pygame.K_DOWN:
-                                if selector != 4:
-                                    selector += 1
-                            elif event.key == pygame.K_RETURN and selector == 1:
+                        elif e.type == pygame.KEYDOWN:
+                            if e.key == pygame.K_UP:
+                                if selectorLevels != 1:
+                                    selectorLevels -= 1
+                            elif e.key == pygame.K_DOWN:
+                                if selectorLevels != 5:
+                                    selectorLevels += 1
+                            elif e.key == pygame.K_RETURN and selectorLevels == 1:
                                 vitesse = 0.5
                                 playing(vitesse)
-                            elif event.key == pygame.K_RETURN and selector == 2:
+                            elif e.key == pygame.K_RETURN and selectorLevels == 2:
                                 vitesse= 1
                                 playing(vitesse)
-                            elif event.key == pygame.K_RETURN and selector == 3:
+                            elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 vitesse = 1.5
                                 playing(vitesse)
-                            elif event.key == pygame.K_RETURN and selector == 4:
+                            elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 vitesse = 2
                                 playing(vitesse)
+                            elif e.key == pygame.K_RETURN and selectorLevels == 5:
+                                quitter = True
+                                break
+
                     draw_levels()
-            elif event.key == pygame.K_RETURN and selector == 2:
+                    if quitter:
+                        quitter = False
+                        break
+            elif event.key == pygame.K_RETURN and selectorMenu == 2: #bouton credits
                 drawCredits()
-            elif event.key == pygame.K_RETURN and selector == 3:
+            elif event.key == pygame.K_RETURN and selectorMenu == 3: #bouton quit
                 pygame.quit()
                 exit()
 
