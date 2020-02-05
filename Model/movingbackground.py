@@ -3,8 +3,9 @@ import pygame
 import random
 
 
-class MovingBackground:  # avec un sprite après
-    def __init__(self):
+class MovingBackground():  # avec un sprite après
+    def __init__(self, images):
+        self.images = images
         self.obstacles = []
         self.area = pygame.display.get_surface().get_rect()
         self.generateObstacles()
@@ -12,12 +13,12 @@ class MovingBackground:  # avec un sprite après
         self.windForceX = 0
         self.windForceY = 0
 
-
     def generateObstacles(self):
         if len(self.obstacles) > 20:
             self.obstacles = self.obstacles[9:]
-        obstacle = Obstacle()
+        obstacle = Obstacle(self.images)
         self.obstacles.append(obstacle)
+        return obstacle
 
     def fall(self, vitesse):
         for obstacle in self.obstacles:
