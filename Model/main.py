@@ -92,7 +92,7 @@ def playing():
 
         if game.pressed.get(pygame.K_SPACE):
             # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
-
+            riendutouttout = 0
 
         if rect.contains(game.player.rect):
             riendutout = 0
