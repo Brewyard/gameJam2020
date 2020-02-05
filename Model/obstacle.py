@@ -2,9 +2,12 @@ import pygame
 import random
 
 
-class Obstacle:
-    def __init__(self):
+class Obstacle(pygame.sprite.Sprite):
+    def __init__(self, images):
+        super(Obstacle, self).__init__()
         self.longueurVent = random.randint(10, 400)
+        size = (self.longueurVent, self.longueurVent/)
+
         self.img = pygame.Surface((self.longueurVent, 10))
         self.img = self.img.convert()
         self.img.fill((255, 0, 0))
