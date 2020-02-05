@@ -60,6 +60,7 @@ def playing(vitesseAcceleration):
     debut_souffle = pygame.time.get_ticks()
     while launch:
         clock.tick(60)
+        dt = clock.tick(60) / 1000
         # game.menu(screen)
         # background_music.play()
         screen.blit(imageJeu, rect)
@@ -84,19 +85,21 @@ def playing(vitesseAcceleration):
         # deplacement de la bulle(player) avec collision aux murs
         if souffle and secondesDeSouffle < 1:  # il ne peut pas se deplacer le temps du souffle
             if movingBackground.windDirection == 0:  # souffle à gauche
-                game.player.move_left(movingBackground.windForce)
+                game.player.souffler(-movingBackground.windForceX, movingBackground.windForceY)
             else:
-                game.player.move_right(movingBackground.windForce)
+                game.player.souffler(movingBackground.windForceX, movingBackground.windForceY)
         else:
             if game.pressed.get(pygame.K_LEFT):
-                game.player.move_left()
-            if game.pressed.get(pygame.K_RIGHT):
-                game.player.move_right()
+                game.player.move_left(5)
+            elif game.pressed.get(pygame.K_RIGHT):
+                game.player.move_right(5)
+            else:
+                game.player.velocityX = 0
             souffle = False
 
         if game.pressed.get(pygame.K_SPACE):
             # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
-            ilPeut = game.player.retrecirOuAgrandir(game.player.width - 1, game.player.height - 1)  # retrecit bulle
+            ilPeut = game.player.retrecirOuAgrandir(game.player.width - 3, game.player.height - 3)  # retrecit bulle
             if ilPeut:
                 game.vitesseAcceleration += 1  # augmente vitesse
         #else:
@@ -116,7 +119,9 @@ def playing(vitesseAcceleration):
             elif event.type == pygame.KEYUP:
                 game.pressed[event.key] = False
 
-        screen.blit(game.player.image, game.player.rect)
+        game.all_sprites.update(dt)
+        # screen.blit(game.player.image, game.player.rect)
+        game.all_sprites.draw(screen)
         pygame.display.update()
         compteTours += 1
 
