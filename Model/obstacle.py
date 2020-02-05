@@ -6,22 +6,22 @@ from utils_game import scale_image
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self, images):
         super(Obstacle, self).__init__()
-        self.longueurVent = random.randint(10, 400)
+        self.longueurVent = random.randint(50, 150)
         size = (self.longueurVent, self.longueurVent / 2.5)
 
         imagesScaled = []
         for image in images:
             imagesScaled.append(scale_image(image, self.longueurVent, int(self.longueurVent / 2.5)))
         self.images = imagesScaled
+        randomAngle = random.randint(0, 360)
+        self.images = [pygame.transform.rotate(image, randomAngle) for image in self.images]
 
-        self.rect = pygame.Rect((random.randint(0, 1) * (800 - self.longueurVent), 0), size)
-        if self.rect.left != 0:  # il est a droite
-            self.images = [pygame.transform.flip(image, True, False) for image in self.images]
+        self.rect = pygame.Rect(((random.randint(0, 800-self.longueurVent), 0), size))
 
         self.index = 0
         self.image = images[self.index]
 
-        self.animation_time = 0.03
+        self.animation_time = 0.02
         self.current_time = 0
 
         self.animation_frames = 6
@@ -56,7 +56,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect.y += self.speed + vitesse
 
     def windTouch2(self, target):
-        hitbox = self.rect.inflate(-5, -5)
+        hitbox = self.rect.inflate(-10, -10)
         if hitbox.colliderect(target):
             return True
         else:

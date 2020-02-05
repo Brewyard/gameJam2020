@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.velocityX = 0
         self.velocityY = 0
 
-        self.animation_time = 0.07
+        self.animation_time = 0.02
         self.current_time = 0
 
         self.animation_frames = 6
