@@ -8,17 +8,18 @@ class MovingBackground:  # avec un sprite après
         self.obstacles = []
         self.area = pygame.display.get_surface().get_rect()
         self.generateObstacles()
+        self.windDirection = 0 # O pour souffle vers la gauche et 1 pour souffle vers la droite
+        self.windForce = 0;
 
     def generateObstacles(self):
-        i = 0
-        while i < random.randint(1, 2):
-            obstacle = Obstacle(1)
-            self.obstacles.append(obstacle)
-            i += 1
+        if len(self.obstacles) > 20:
+            self.obstacles = self.obstacles[9:]
+        obstacle = Obstacle(1)
+        self.obstacles.append(obstacle)
 
-    def fall(self):
+    def fall(self, vitesse):
         for obstacle in self.obstacles:
-            obstacle.fall()
+            obstacle.fall(vitesse)
 
     def addObstacles(self):
         self.generateObstacles()
@@ -26,5 +27,11 @@ class MovingBackground:  # avec un sprite après
     def windTouch(self, target):
         touch = False
         for obstacle in self.obstacles:
-            touch = obstacle.windTouch(target)
+            if obstacle.windTouch2(target):
+                touch = True
+                if obstacle.rect.left == 0: # c'est un souffle vers la droite
+                    self.windDirection = 1
+                else:
+                    self.windDirection = 0
+                self.windForce = obstacle.rect.width / 100
         return touch

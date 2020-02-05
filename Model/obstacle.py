@@ -4,15 +4,19 @@ import random
 
 class Obstacle:
     def __init__(self, speed):
-        self.img = pygame.Surface((50, 10))
+        longueurVent = random.randint(10, 400)
+        self.img = pygame.Surface((longueurVent, 10))
         self.img = self.img.convert()
-        self.img.fill((0, 0, 0))
-        self.pos = self.img.get_rect().move(random.randint(0, 1)*450, 0)
+        self.img.fill((255, 0, 0))
+        self.rect = self.img.get_rect().move(random.randint(0, 1) * (800 - longueurVent), 0)
         self.speed = speed
 
-    def fall(self):
-        self.pos = self.pos.move(0, self.speed)
+    def fall(self, vitesse):
+        self.rect = self.rect.move(0, self.speed + vitesse)
 
-    def windTouch(self, target):
-        hitbox = self.img.get_rect().inflate(-5, -5)
-        return hitbox.colliderect(target)
+    def windTouch2(self, target):
+        hitbox = self.rect.inflate(-5, -5)
+        if hitbox.colliderect(target):
+            return True
+        else:
+            return False
