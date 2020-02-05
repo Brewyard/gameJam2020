@@ -8,15 +8,17 @@ Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
 Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
 selector = 1
 placement = 200
-
 game = Game()
 
-
+f = open('../highscore.txt', 'r')
+highscore = int(f.read())
+f.close()
 
 def drawMenu():
     #Generer la fenetre de notre jeu
     windowSize = (800, 600)
     origin = (0,0)
+    global highscore
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin,windowSize)
     image = pygame.Surface(windowSize)
@@ -25,19 +27,21 @@ def drawMenu():
     textStart = Texty.render('start', 0, (255, 0, 0))
     textCredits = Texty.render('Credits', 0, (255, 0, 0))
     textQuit = Texty.render('quit ', 0, (255, 0, 0))
+    textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
     screen.blit(textTitre, (400, 150))
     screen.blit(textStart, (400, 200))
     screen.blit(textCredits, (400, 250))
     screen.blit(textQuit, (400, 300))
+    screen.blit(textHighscore,(50,50))
     if selector == 1:
         placement = 200
     elif selector == 2:
         placement = 250
     elif selector == 3:
         placement = 300
-    screen.blit(imageFleche,(200, placement))
+    screen.blit(imageFleche,(350, placement))
     pygame.display.update()
 
 
@@ -45,18 +49,7 @@ Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
 Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
 selector = 1
 placement = 200
-facile = False
-normal = False
-pro = False
-expert = False
 
-def facile():
-    facile = True
-    return facile
-
-def normal():
-    normal = True
-    return normal
 
 
 def draw_levels():
@@ -70,6 +63,7 @@ def draw_levels():
     textLevelNormal = Texty.render('Normal', 0, (255, 0, 0))
     textLevelPro = Texty.render('Pro', 0, (255, 0, 0))
     textLevelExpert = Texty.render('Expert', 0, (255, 0, 0))
+
 
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche, (30, 30))

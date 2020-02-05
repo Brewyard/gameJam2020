@@ -15,7 +15,8 @@ origin = (0, 0)
 screen = pygame.display.set_mode(windowSize)
 rect = pygame.Rect(origin, windowSize)
 image = pygame.Surface(windowSize)
-imageJeu = pygame.image.load("../Images/background_Menu.jpg")
+imageJeu = pygame.image.load("../Images/background.png")
+imageJeu = pygame.transform.scale(imageJeu,(800,600))
 
 launch = True
 menu = True
@@ -42,18 +43,24 @@ game.all_sprites.add(obstacle2)
 
 
 # game.menu(screen)
-
+score = 0
 def gameOver():
+    global score
     # pb : fait le son en double si on meurt alors sond pop et image disparait
     bubble_pop.play()
+    #enregistrement du score dans un fichier
+    f = open('../highscore.txt', 'r')
+    highscore = int(f.read())
+    f.close()
+    if score >= highscore:
+        f = open('../highscore.txt','w')
+        f.write(str(score))
+        f.close()
+
     game.player.image.fill(transparent)
     grey = (128, 128, 128)
-    gameOverFont = pygame.font.Font('freesansbold.ttf', 72)
-    gameOverSurface = gameOverFont.render('Game Over', True, grey)
-    gameOverRect = gameOverSurface.get_rect()
-    gameOverRect.midtop = (400, 200)
-    screen.blit(gameOverSurface, gameOverRect)
     pygame.display.flip()
+
     time.sleep(1)
     return
 
@@ -66,7 +73,10 @@ def playing(vitesseAcceleration):
     souffle = False
     secondesDeSouffle = 0
     debut_souffle = pygame.time.get_ticks()
+
     while launch:
+        global score
+        score += 1
         clock.tick(60)
         dt = clock.tick(60) / 1000
         # game.menu(screen)
@@ -117,6 +127,7 @@ def playing(vitesseAcceleration):
         if rect.contains(game.player.rect):
             riendutout = 0
         else:
+            print(score)
             gameOver()
 
         for event in pygame.event.get():
