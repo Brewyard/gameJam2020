@@ -25,10 +25,18 @@ class Player(pygame.sprite.Sprite):
         # depend de la taille de la bulle
         print('moveY')
         print(moveY)
-        print('moveX')
-        print(moveX)
-        self.rect.x += moveX - (self.rect.width/50)
-        self.rect.y += moveY - (self.rect.height/50)
+        print('height')
+        print(self.rect.height/50)
+
+        if moveX <= 0:
+            self.rect.x += moveX + (self.rect.width / 90)
+        else:
+            self.rect.x += moveX - (self.rect.width / 90)
+
+        if moveY <= 0:
+            self.rect.y += moveY + (self.rect.height / 90)
+        else:
+            self.rect.y += moveY - (self.rect.height / 90)
 
     # mouvement pour niveaux horizontaux (deplacement haut/bas)
     def move_down(self):
