@@ -5,6 +5,8 @@ from game import Game
 from movingbackground import MovingBackground
 from obstacle import Obstacle
 
+
+
 # Color
 transparent = (0, 0, 0, 0)
 # Generer la fenetre de notre jeu
@@ -45,10 +47,12 @@ def gameOver():
     screen.blit(gameOverSurface, gameOverRect)
     pygame.display.flip()
     time.sleep(1)
+    return
 
 
 # boucle principale
-def playing():
+def playing(vitesseAcceleration):
+    game.vitesseAcceleration = vitesseAcceleration
     intervalleAleatoire = random.randint(1, 100)
     compteTours = 0
     souffle = False
@@ -56,6 +60,7 @@ def playing():
     debut_souffle = pygame.time.get_ticks()
     while launch:
         clock.tick(60)
+        dt = clock.tick(60) / 1000
         # game.menu(screen)
         # background_music.play()
         screen.blit(imageJeu, rect)
@@ -66,7 +71,7 @@ def playing():
             compteTours = 0
             intervalleAleatoire = random.randint(1, 100)
 
-        movingBackground.fall(game.vitesse)
+        movingBackground.fall(game.vitesseAcceleration + game.vitesseBullePercee)
         for obstacle in movingBackground.obstacles:
             screen.blit(obstacle.img, obstacle.rect)
 
@@ -80,23 +85,25 @@ def playing():
         # deplacement de la bulle(player) avec collision aux murs
         if souffle and secondesDeSouffle < 1:  # il ne peut pas se deplacer le temps du souffle
             if movingBackground.windDirection == 0:  # souffle à gauche
-                game.player.move_left(movingBackground.windForce)
+                game.player.souffler(-movingBackground.windForceX, movingBackground.windForceY)
             else:
-                game.player.move_right(movingBackground.windForce)
+                game.player.souffler(movingBackground.windForceX, movingBackground.windForceY)
         else:
             if game.pressed.get(pygame.K_LEFT):
-                game.player.move_left()
-            if game.pressed.get(pygame.K_RIGHT):
-                game.player.move_right()
+                game.player.move_left(5)
+            elif game.pressed.get(pygame.K_RIGHT):
+                game.player.move_right(5)
+            else:
+                game.player.velocityX = 0
             souffle = False
 
         if game.pressed.get(pygame.K_SPACE):
             # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
-            ilPeut = game.player.retrecirOuAgrandir(game.player.width - 1, game.player.height - 1)  # retrecit bulle
+            ilPeut = game.player.retrecirOuAgrandir(game.player.width - 3, game.player.height - 3)  # retrecit bulle
             if ilPeut:
-                game.vitesse += 1  # augmente vitesse
+                game.vitesseBullePercee += 1  # augmente vitesse
         else:
-            game.vitesse = 0
+            game.vitesseBullePercee = 0
 
         if rect.contains(game.player.rect):
             riendutout = 0
@@ -112,7 +119,9 @@ def playing():
             elif event.type == pygame.KEYUP:
                 game.pressed[event.key] = False
 
-        screen.blit(game.player.image, game.player.rect)
+        game.all_sprites.update(dt)
+        # screen.blit(game.player.image, game.player.rect)
+        game.all_sprites.draw(screen)
         pygame.display.update()
         compteTours += 1
 
