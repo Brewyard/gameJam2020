@@ -16,14 +16,19 @@ def load_image(name):
 
 def load_images():
     #images = [load_image(PATH + "bubble.png"), load_image(PATH + "bubble75horizon.png"), load_image(PATH + "bubble50horizon.png"),
-     #         load_image(PATH + "bubble75horizon.png"), load_image(PATH + "bubble.png"), load_image(PATH + "bubble75verti.png"),
-      #        load_image(PATH + "bubble50verti.png"), load_image(PATH + "bubble75verti.png")]
-    images = [load_image(PATH + "W401-1.png"), load_image(PATH + "W401-2.png"), load_image(PATH + "W401-3.png"),
-              load_image(PATH + "W401-4.png"), load_image(PATH + "W401-5.png"), load_image(PATH + "W401-6.png"),
-              load_image(PATH + "W401-7.png"), load_image(PATH + "W401-8.png"), load_image(PATH + "W401-9.png"),
-              load_image(PATH + "W401-10.png"), load_image(PATH + "W401-11.png"), load_image(PATH + "W401-12.png"),
-              load_image(PATH + "W401-13.png"), load_image(PATH + "W401-14.png"), load_image(PATH + "W401-15.png"),
-              load_image(PATH + "W401-16.png")]
+    #          load_image(PATH + "bubble75horizon.png"), load_image(PATH + "bubble.png"), load_image(PATH + "bubble75verti.png"),
+    #          load_image(PATH + "bubble50verti.png"), load_image(PATH + "bubble75verti.png")]
+    #images = [load_image(PATH + "W401-1.png"), load_image(PATH + "W401-2.png"), load_image(PATH + "W401-3.png"),
+    #          load_image(PATH + "W401-4.png"), load_image(PATH + "W401-5.png"), load_image(PATH + "W401-6.png"),
+    #          load_image(PATH + "W401-7.png"), load_image(PATH + "W401-8.png"), load_image(PATH + "W401-9.png"),
+    #          load_image(PATH + "W401-10.png"), load_image(PATH + "W401-11.png"), load_image(PATH + "W401-12.png"),
+    #          load_image(PATH + "W401-13.png"), load_image(PATH + "W401-14.png"), load_image(PATH + "W401-15.png"),
+    #          load_image(PATH + "W401-16.png")]
+    #images = [load_image(PATH + "bird_blue_1.png"), load_image(PATH + "bird_blue_2.png"), load_image(PATH + "bird_blue_3.png")]
+    #images = [load_image(PATH + "bird_brown_1.png"), load_image(PATH + "bird_brown_2.png"), load_image(PATH + "bird_brown_3.png")]
+    #images = [load_image(PATH + "bird_robin_1.png"), load_image(PATH + "bird_robin_2.png"), load_image(PATH + "bird_robin_3.png")]
+    images = [load_image(PATH + "bubbles_group_1.png"), load_image(PATH + "bubbles_group_2.png"), load_image(PATH + "bubbles_group_3.png"),
+              load_image(PATH + "bubbles_group_4.png"), load_image(PATH + "bubbles_group_5.png")]
     return images
 
 
@@ -43,7 +48,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 
         self.velocity = pygame.math.Vector2(0, 0)
 
-        self.animation_time = 0.07
+        self.animation_time = 0.15
         self.current_time = 0
 
         self.animation_frames = 6
