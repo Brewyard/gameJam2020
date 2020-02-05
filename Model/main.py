@@ -80,9 +80,9 @@ def playing():
         # deplacement de la bulle(player) avec collision aux murs
         if souffle and secondesDeSouffle < 1:  # il ne peut pas se deplacer le temps du souffle
             if movingBackground.windDirection == 0:  # souffle à gauche
-                game.player.move_left(movingBackground.windForce)
+                game.player.souffler(-movingBackground.windForceX, movingBackground.windForceY)
             else:
-                game.player.move_right(movingBackground.windForce)
+                game.player.souffler(movingBackground.windForceX, movingBackground.windForceY)
         else:
             if game.pressed.get(pygame.K_LEFT):
                 game.player.move_left()

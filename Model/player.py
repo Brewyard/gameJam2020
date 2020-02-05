@@ -11,20 +11,24 @@ class Player(pygame.sprite.Sprite):
         self.velocity = 5
         self.boost = 20
         self.pointVie = 10
-        self.resistanceVent = 0
         self.width = self.rect.width
         self.height = self.rect.height
 
     # mouvement pour les niveaux verticaux (deplacement gauche/droite)
-    def move_right(self, force=None):
-        if force is None:
-            force = 0
-        self.rect.x = self.rect.x + self.velocity + force
+    def move_right(self):
+        self.rect.x = self.rect.x + self.velocity
 
-    def move_left(self, force=None):
-        if force is None:
-            force = 0
-        self.rect.x = self.rect.x - self.velocity - force
+    def move_left(self):
+        self.rect.x = self.rect.x - self.velocity
+
+    def souffler(self, moveX, moveY):
+        # depend de la taille de la bulle
+        print('moveY')
+        print(moveY)
+        print('moveX')
+        print(moveX)
+        self.rect.x += moveX - (self.rect.width/50)
+        self.rect.y += moveY - (self.rect.height/50)
 
     # mouvement pour niveaux horizontaux (deplacement haut/bas)
     def move_down(self):
