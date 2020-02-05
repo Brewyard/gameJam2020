@@ -6,7 +6,7 @@ from utils_game import scale_image
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self, images):
         super(Obstacle, self).__init__()
-        self.longueurVent = random.randint(50, 150)
+        self.longueurVent = random.randint(50, 200)
         size = (self.longueurVent, self.longueurVent / 2.5)
 
         imagesScaled = []

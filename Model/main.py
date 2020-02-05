@@ -134,27 +134,26 @@ def playing(vitesseAcceleration):
             coordonnees = math.radians(movingBackground.windDirection)
             sin = math.sin(coordonnees)
             cos = math.cos(coordonnees)
-            game.player.move_x(cos*10)
-            game.player.move_y(-(sin*10))
+            game.player.move_x(cos*movingBackground.windForce)
+            print(cos*movingBackground.windForce)
+            game.player.move_y((-sin)*movingBackground.windForce)
+            print((-sin)*movingBackground.windForce)
         else:
             if game.pressed.get(pygame.K_LEFT):
                 game.player.move_x(-10)
             elif game.pressed.get(pygame.K_RIGHT):
                 game.player.move_x(10)
-            else:
-                game.player.velocityX = 0
-                game.player.velocityY = 0
             souffle = False
 
         if game.pressed.get(pygame.K_SPACE):
             # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
             ilPeut = game.player.retrecirOuAgrandir(game.player.width - 3, game.player.height - 3)  # retrecit bulle
             if ilPeut:
-                game.vitesseBullePercee += 1  # augmente vitesse
-        else:
-            game.vitesseBullePercee = 0
+                game.player.move_y(-10)
+        # else:
+        #     game.vitesseBullePercee = 0
 
-        if rect.contains(game.player.rect):
+        if rect.inflate(150, 150).contains(game.player.rect):
             score += 1
             riendutout = 0
         else:
@@ -192,10 +191,13 @@ def playing(vitesseAcceleration):
         compteTours += 1
 
         if souffle:
-            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 100
+            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000
 
-        if movingBackground.obstacles[0]:
+        if movingBackground.obstacles:
             if rect.contains(movingBackground.obstacles[0]):
                 rien = 0
             else:
                 del movingBackground.obstacles[0]
+
+        game.player.velocityX = 0
+        game.player.velocityY = 0
