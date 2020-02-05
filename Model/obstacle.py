@@ -13,8 +13,8 @@ class Obstacle(pygame.sprite.Sprite):
         for image in images:
             imagesScaled.append(scale_image(image, self.longueurVent, int(self.longueurVent / 2.5)))
         self.images = imagesScaled
-        randomAngle = random.randint(0, 360)
-        self.images = [pygame.transform.rotate(image, randomAngle) for image in self.images]
+        self.angle = random.randint(0, 360)
+        self.images = [pygame.transform.rotate(image, self.angle) for image in self.images]
 
         self.rect = pygame.Rect(((random.randint(0, 800-self.longueurVent), 0), size))
 

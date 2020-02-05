@@ -1,5 +1,6 @@
 import pygame, time, random
 pygame.init()
+import math
 from game import Game
 from movingbackground import MovingBackground
 from obstacle import Obstacle
@@ -130,17 +131,19 @@ def playing(vitesseAcceleration):
 
         # deplacement de la bulle(player) avec collision aux murs
         if souffle and secondesDeSouffle < 1:  # il ne peut pas se deplacer le temps du souffle
-            if movingBackground.windDirection == 0:  # souffle à gauche
-                game.player.souffler(-movingBackground.windForceX, movingBackground.windForceY)
-            else:
-                game.player.souffler(movingBackground.windForceX, movingBackground.windForceY)
+            coordonnees = math.radians(movingBackground.windDirection)
+            sin = math.sin(coordonnees)
+            cos = math.cos(coordonnees)
+            game.player.move_x(cos*10)
+            game.player.move_y(-(sin*10))
         else:
             if game.pressed.get(pygame.K_LEFT):
-                game.player.move_left(10)
+                game.player.move_x(-10)
             elif game.pressed.get(pygame.K_RIGHT):
-                game.player.move_right(10)
+                game.player.move_x(10)
             else:
                 game.player.velocityX = 0
+                game.player.velocityY = 0
             souffle = False
 
         if game.pressed.get(pygame.K_SPACE):

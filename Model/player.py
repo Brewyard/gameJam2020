@@ -46,36 +46,30 @@ class Player(pygame.sprite.Sprite):
         self.update_time_dependent(dt)
         # self.update_frame_dependent()
 
-    # mouvement pour les niveaux verticaux (deplacement gauche/droite)
-    def move_right(self, velocity):
+    # mouvement pour les niveaux horizontaux (deplacement gauche/droite)
+    def move_x(self, velocity):
         self.velocityX = velocity
 
-    def move_left(self, velocity):
-        self.velocityX = -velocity
-
     def souffler(self, moveX, moveY):
+        test = 77
         # depend de la taille de la bulle
-        print('moveY')
-        print(moveY)
-        print('height')
-        print(self.rect.height/50)
-
-        if moveX <= 0:
-            self.rect.x += moveX + (self.rect.width / 90)
-        else:
-            self.rect.x += moveX - (self.rect.width / 90)
-
-        if moveY <= 0:
-            self.rect.y += moveY + (self.rect.height / 90)
-        else:
-            self.rect.y += moveY - (self.rect.height / 90)
+        # print('moveY')
+        # print(moveY)
+        # print('height')
+        # print(self.rect.height/50)
+        # if moveX <= 0:
+        #     self.rect.x += moveX + (self.rect.width / 90)
+        # else:
+        #     self.rect.x += moveX - (self.rect.width / 90)
+        #
+        # if moveY <= 0:
+        #     self.rect.y += moveY + (self.rect.height / 90)
+        # else:
+        #     self.rect.y += moveY - (self.rect.height / 90)
 
     # mouvement pour niveaux horizontaux (deplacement haut/bas)
-    def move_down(self):
-        self.rect.y = self.rect.y + self.velocityX
-
-    def move_up(self):
-        self.rect.y = self.rect.y - self.velocityY
+    def move_y(self, velocity):
+        self.velocityY = velocity
 
     # methode permettant d'ajouter le sprint en hauteur (AJOUTER la vitesse au background et non a la bulle car la camera est sur la bulle)
     def sprint_up(self):
