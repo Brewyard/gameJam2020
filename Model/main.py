@@ -148,7 +148,8 @@ def playing(vitesseAcceleration):
         if souffle:
             secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000
 
-        if rect.contains(movingBackground.obstacles[0]):
-            rien = 0
-        else:
-            del movingBackground.obstacles[0]
+        if movingBackground.obstacles[0]:
+            if rect.contains(movingBackground.obstacles[0]):
+                rien = 0
+            else:
+                del movingBackground.obstacles[0]
