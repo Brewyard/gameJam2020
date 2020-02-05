@@ -29,6 +29,7 @@ class Game():
         }
 
         self.vitesseAcceleration = 0
+        self.vitesseBullePercee = 0
         self.all_sprites = pygame.sprite.Group(self.player)
 
 

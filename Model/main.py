@@ -71,7 +71,7 @@ def playing(vitesseAcceleration):
             compteTours = 0
             intervalleAleatoire = random.randint(1, 100)
 
-        movingBackground.fall(game.vitesseAcceleration)
+        movingBackground.fall(game.vitesseAcceleration + game.vitesseBullePercee)
         for obstacle in movingBackground.obstacles:
             screen.blit(obstacle.img, obstacle.rect)
 
@@ -101,9 +101,9 @@ def playing(vitesseAcceleration):
             # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
             ilPeut = game.player.retrecirOuAgrandir(game.player.width - 3, game.player.height - 3)  # retrecit bulle
             if ilPeut:
-                game.vitesseAcceleration += 1  # augmente vitesse
-        #else:
-         #   game.vitesseAcceleration = 0
+                game.vitesseBullePercee += 1  # augmente vitesse
+        else:
+            game.vitesseBullePercee = 0
 
         if rect.contains(game.player.rect):
             riendutout = 0
