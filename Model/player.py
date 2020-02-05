@@ -20,7 +20,6 @@ class Player(pygame.sprite.Sprite):
         self.current_frame = 0
 
         self.boost = 20
-        self.pointVie = 10
         self.width = self.rect.width
         self.height = self.rect.height
 

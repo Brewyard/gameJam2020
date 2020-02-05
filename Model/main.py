@@ -1,12 +1,12 @@
 import pygame, time, random
-
 pygame.init()
 from game import Game
 from movingbackground import MovingBackground
 from obstacle import Obstacle
 
 
-
+selectorGameOver = 1
+placement = 300
 # Color
 transparent = (0, 0, 0, 0)
 # Generer la fenetre de notre jeu
@@ -36,9 +36,15 @@ movingBackground.generateObstacles()
 # game.menu(screen)
 score = 0
 def gameOver():
-    global score
+    Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
+    Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
+    global score,placement,selectorGameOver
+    global windowSize,origin,screen
+    placement = 300
+    selectorGameOver = 1
     # pb : fait le son en double si on meurt alors sond pop et image disparait
     bubble_pop.play()
+    game.player.image.fill(transparent)
     #enregistrement du score dans un fichier
     f = open('../highscore.txt', 'r')
     highscore = int(f.read())
@@ -48,12 +54,32 @@ def gameOver():
         f.write(str(score))
         f.close()
 
-    game.player.image.fill(transparent)
-    grey = (128, 128, 128)
-    pygame.display.flip()
+    f = open('../highscore.txt', 'r')
+    highscore = int(f.read())
+    f.close()
+    windowSize = (800, 600)
+    origin = (0, 0)
+    screen = pygame.display.set_mode(windowSize)
+    rect = pygame.Rect(origin, windowSize)
+    image = pygame.Surface(windowSize)
+    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
 
-    time.sleep(1)
-    return
+    textMort = Texty.render('Game Over ', 0, (0, 0, 255))
+    textRetour = Texty.render('Retour ', 0, (0, 0, 255))
+    textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
+    textScore = Texty.render("Score : "+str(score),0,(255,0,0))
+
+    imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
+    imageFleche = pygame.transform.scale(imageFleche, (30, 30))
+    screen.blit(textRetour, (300, 300))
+    screen.blit(textMort, (300, 200))
+    screen.blit(textHighscore, (50, 50))
+    screen.blit(textScore, (50, 100))
+
+    if selectorGameOver == 1:
+        placement == 300
+    screen.blit(imageFleche, (260, placement))
+    pygame.display.update()
 
 
 # boucle principale
@@ -67,7 +93,6 @@ def playing(vitesseAcceleration):
 
     while launch:
         global score
-        score += 1
         clock.tick(60)
         dt = clock.tick(60) / 1000
         # game.menu(screen)
@@ -86,6 +111,7 @@ def playing(vitesseAcceleration):
 
         # si bulle touche obstacle
         if movingBackground.windTouch(game.player.rect):
+            windy_today.play()
             # souffler de l'air sur la bulle
             souffle = True
             debut_souffle = pygame.time.get_ticks()
@@ -99,9 +125,9 @@ def playing(vitesseAcceleration):
                 game.player.souffler(movingBackground.windForceX, movingBackground.windForceY)
         else:
             if game.pressed.get(pygame.K_LEFT):
-                game.player.move_left(5)
+                game.player.move_left(10)
             elif game.pressed.get(pygame.K_RIGHT):
-                game.player.move_right(5)
+                game.player.move_right(10)
             else:
                 game.player.velocityX = 0
             souffle = False
@@ -115,10 +141,26 @@ def playing(vitesseAcceleration):
             game.vitesseBullePercee = 0
 
         if rect.contains(game.player.rect):
+            score += 1
             riendutout = 0
         else:
-            print(score)
             gameOver()
+            true = True
+            quitter = False
+            while true:
+                for x in pygame.event.get():
+                    if x.type == pygame.QUIT:
+                        pygame.quit()
+                        exit()
+                    elif x.type == pygame.KEYDOWN:
+                        if x.key == pygame.K_RETURN and selectorGameOver == 1:
+                            quitter = True
+                            break
+
+                #drawMenu()
+
+
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -136,4 +178,4 @@ def playing(vitesseAcceleration):
         compteTours += 1
 
         if souffle:
-            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000
+            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 100

@@ -39,8 +39,6 @@ class MovingBackground:  # avec un sprite après
                     posXDeLaBulle += target.width
 
                 self.windForceY = abs(posXDeLaBulle - obstacle.longueurVent)/80
-                print('windforceY')
-                print(self.windForceY)
                 if target.bottom < obstacle.rect.top: #  si bulle au dessus de obstacle
                     self.windForceY = -self.windForceY
 
