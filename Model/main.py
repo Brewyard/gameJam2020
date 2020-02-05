@@ -46,6 +46,7 @@ def gameOver():
     gameOverRect.midtop = (400, 200)
     screen.blit(gameOverSurface, gameOverRect)
     pygame.display.flip()
+
     time.sleep(1)
     return
 
@@ -58,7 +59,9 @@ def playing(vitesseAcceleration):
     souffle = False
     secondesDeSouffle = 0
     debut_souffle = pygame.time.get_ticks()
+    score = 0
     while launch:
+        
         clock.tick(60)
         dt = clock.tick(60) / 1000
         # game.menu(screen)
@@ -108,6 +111,7 @@ def playing(vitesseAcceleration):
         if rect.contains(game.player.rect):
             riendutout = 0
         else:
+            print(score)
             gameOver()
 
         for event in pygame.event.get():
