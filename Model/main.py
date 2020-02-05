@@ -5,6 +5,8 @@ from game import Game
 from movingbackground import MovingBackground
 from obstacle import Obstacle
 
+
+
 # Color
 transparent = (0, 0, 0, 0)
 # Generer la fenetre de notre jeu
@@ -45,10 +47,12 @@ def gameOver():
     screen.blit(gameOverSurface, gameOverRect)
     pygame.display.flip()
     time.sleep(1)
+    return
 
 
 # boucle principale
-def playing():
+def playing(vitesseAcceleration):
+    game.vitesseAcceleration = vitesseAcceleration
     intervalleAleatoire = random.randint(1, 100)
     compteTours = 0
     souffle = False
@@ -66,7 +70,7 @@ def playing():
             compteTours = 0
             intervalleAleatoire = random.randint(1, 100)
 
-        movingBackground.fall(game.vitesse)
+        movingBackground.fall(game.vitesseAcceleration)
         for obstacle in movingBackground.obstacles:
             screen.blit(obstacle.img, obstacle.rect)
 
@@ -94,9 +98,9 @@ def playing():
             # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
             ilPeut = game.player.retrecirOuAgrandir(game.player.width - 1, game.player.height - 1)  # retrecit bulle
             if ilPeut:
-                game.vitesse += 1  # augmente vitesse
-        else:
-            game.vitesse = 0
+                game.vitesseAcceleration += 1  # augmente vitesse
+        #else:
+         #   game.vitesseAcceleration = 0
 
         if rect.contains(game.player.rect):
             riendutout = 0

@@ -9,16 +9,17 @@ class MovingBackground:  # avec un sprite après
         self.area = pygame.display.get_surface().get_rect()
         self.generateObstacles()
         self.windDirection = 0 # O pour souffle vers la gauche et 1 pour souffle vers la droite
-        self.windForce = 0;
+        self.windForce = 0
 
     def generateObstacles(self):
         if len(self.obstacles) > 20:
             self.obstacles = self.obstacles[9:]
-        obstacle = Obstacle(1)
+        obstacle = Obstacle()
         self.obstacles.append(obstacle)
 
     def fall(self, vitesse):
         for obstacle in self.obstacles:
+            print(vitesse)
             obstacle.fall(vitesse)
 
     def addObstacles(self):
