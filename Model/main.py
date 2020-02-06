@@ -51,7 +51,6 @@ windy_today = pygame.mixer.Sound('../Sounds/wind.wav')
 background_music = pygame.mixer.Sound('../Sounds/Play.wav')
 
 # chargement du jeu
-game = Game()
 clock = pygame.time.Clock()
 
 # generation background
@@ -66,9 +65,6 @@ imagesVent = [load_image(PATH + "vent1.png"), load_image(PATH + "vent2.png"), lo
 #     print('nani')
 # imagesVent = [load_image(PATH + "wind-sens-1.png"), load_image(PATH + "wind-sens-2.png"), load_image(PATH + "wind-sens-1.png")]
 # imagesVent = [load_image(PATH + "wind1.png"), load_image(PATH + "wind2.png"), load_image(PATH + "wind3.png"), load_image(PATH + "wind4.png")]
-movingBackground = MovingBackground(imagesVent)
-obstacle2 = movingBackground.generateObstacles()
-game.all_sprites.add(obstacle2)
 
 # game.menu(screen)
 score = 0
@@ -163,7 +159,7 @@ def gameOver():
     placement = 300
     selectorGameOver = 1
     bubble_pop.play()
-    game.player.image.fill(transparent)
+    # game.player.image.fill(transparent)
 
     f = open('../highscore.txt', 'r')
     highscore = int(f.read())
@@ -201,6 +197,11 @@ def gameOver():
 
 # boucle principale
 def playing(difficulte):
+    game = Game()
+    movingBackground = MovingBackground(imagesVent)
+    obstacle2 = movingBackground.generateObstacles()
+    game.all_sprites.add(obstacle2)
+
     game.setDifficulte(difficulte)
     intervalleAleatoireVent = random.randint(1, game.frequenceVent)
     compteToursVent = 0
@@ -276,8 +277,8 @@ def playing(difficulte):
                 # gameover
                 background_music.stop()
                 en_jeu = False
-                game.player.resetPlayer()
-                game.resetGame()
+                # game.player.resetPlayer()
+                # game.resetGame()
                 return en_jeu
             # si bird sorti de l'ecran
             if not rect.inflate(200, 200).contains(bird.rect):
@@ -337,8 +338,8 @@ def playing(difficulte):
             riendutout = 0
         else:
             background_music.stop()
-            game.player.resetPlayer()
-            game.resetGame()
+            # game.player.resetPlayer()
+            # game.resetGame()
             en_jeu = False
             return en_jeu
 
