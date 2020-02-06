@@ -1,14 +1,17 @@
 import pygame, time, random
+
 pygame.init()
 import math
 from game import Game
 from movingbackground import MovingBackground
 from obstacle import Obstacle
+
 selectorGameOver = 1
 placement = 300
 from utils_game import load_image
 from utils_game import PATH
 from utils_game import scale_image
+
 # Color
 transparent = (0, 0, 0, 0)
 # Generer la fenetre de notre jeu
@@ -19,7 +22,7 @@ screen = pygame.display.set_mode(windowSize)
 rect = pygame.Rect(origin, windowSize)
 image = pygame.Surface(windowSize)
 imageJeu = pygame.image.load("../Images/background.png")
-imageJeu = pygame.transform.scale(imageJeu,(800,600))
+imageJeu = pygame.transform.scale(imageJeu, (800, 600))
 
 launch = True
 menu = True
@@ -29,42 +32,46 @@ bubble_pop = pygame.mixer.Sound('../Sounds/bubble-pop.wav')
 windy_today = pygame.mixer.Sound('../Sounds/wind.wav')
 background_music = pygame.mixer.Sound('../Sounds/Play.wav')
 
-
 # chargement du jeu
 game = Game()
 clock = pygame.time.Clock()
 
 # generation background
+# try:
 imagesVent = [load_image(PATH + "vent1.png"), load_image(PATH + "vent2.png"), load_image(PATH + "vent3.png"),
               load_image(PATH + "vent4.png"), load_image(PATH + "vent5.png"), load_image(PATH + "vent6.png"),
               load_image(PATH + "vent7.png"), load_image(PATH + "vent8.png"), load_image(PATH + "vent9.png"),
               load_image(PATH + "vent10.png"), load_image(PATH + "vent11.png"), load_image(PATH + "vent12.png"),
               load_image(PATH + "vent13.png"), load_image(PATH + "vent14.png"), load_image(PATH + "vent15.png"),
               load_image(PATH + "vent16.png")]
+# except:
+#     print('nani')
+# imagesVent = [load_image(PATH + "wind-sens-1.png"), load_image(PATH + "wind-sens-2.png"), load_image(PATH + "wind-sens-1.png")]
 
 movingBackground = MovingBackground(imagesVent)
 obstacle2 = movingBackground.generateObstacles()
 game.all_sprites.add(obstacle2)
 
-
 # game.menu(screen)
 score = 0
+
+
 def gameOver():
     Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
     Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
-    global score,placement,selectorGameOver
-    global windowSize,origin,screen
+    global score, placement, selectorGameOver
+    global windowSize, origin, screen
     placement = 300
     selectorGameOver = 1
     # pb : fait le son en double si on meurt alors son pop et image disparait
     bubble_pop.play()
     game.player.image.fill(transparent)
-    #enregistrement du score dans un fichier
+    # enregistrement du score dans un fichier
     f = open('../highscore.txt', 'r')
     highscore = int(f.read())
     f.close()
     if score >= highscore:
-        f = open('../highscore.txt','w')
+        f = open('../highscore.txt', 'w')
         f.write(str(score))
         f.close()
 
@@ -82,8 +89,8 @@ def gameOver():
 
     textMort = Texty.render('Game Over ', 0, (0, 0, 255))
     textRetour = Texty.render('Retour ', 0, (0, 0, 255))
-    textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
-    textScore = Texty.render("Score : "+str(score),0,(255,0,0))
+    textHighscore = Texty.render("Highscore : " + str(highscore), 0, (255, 0, 0))
+    textScore = Texty.render("Score : " + str(score), 0, (255, 0, 0))
 
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche, (30, 30))
@@ -140,7 +147,7 @@ def playing(vitesseAcceleration):
         if compteTours3 == intervalleAleatoire3:
             bird = game.addBird()
             compteTours3 = 0
-            intervalleAleatoire3 = random.randint(1, 100)
+            intervalleAleatoire3 = random.randint(1, 1000)
             game.all_sprites.add(bird)
 
         movingBackground.fall(game.vitesseAcceleration + game.vitesseBullePercee)
@@ -158,14 +165,15 @@ def playing(vitesseAcceleration):
         # si bulle touche boost
         for boost in game.boosts:
             if boost.touch(game.player.rect):
+                print('ca touche mamene')
                 #  gonfler la bulle et delete le boost
                 game.player.retrecirOuAgrandir(game.player.width + 15, game.player.height + 15)
                 game.boosts.remove(boost)
-                game.all_sprites.remove(boost)
+                # game.all_sprites.remove(boost)
             # si boost sorti de l'ecran
             if not rect.inflate(200, 200).contains(boost.rect):
                 game.boosts.remove(boost)
-                game.all_sprites.remove(boost)
+                # game.all_sprites.remove(boost)
 
         # si bulle touche boost
         for bird in game.birds:
@@ -185,22 +193,18 @@ def playing(vitesseAcceleration):
             sin = math.sin(coordonnees)
             cos = math.cos(coordonnees)
             # pour le x
-            if cos*movingBackground.windForce < 0:
-                force = cos*movingBackground.windForce+(game.player.width/50)
-                if force * (cos * movingBackground.windForce) < 0: # depasser le 0
+            if cos * movingBackground.windForce < 0:
+                force = cos * movingBackground.windForce + (game.player.width / 50)
+                if force * (cos * movingBackground.windForce) < 0:  # depasser le 0
                     game.player.move_x(-1)
-                    print(-1)
                 else:
                     game.player.move_x(force)
-                    print(force)
             else:
-                force = cos*movingBackground.windForce-(game.player.width/50)
-                if force * (cos * movingBackground.windForce) < 0: # depasser le 0
+                force = cos * movingBackground.windForce - (game.player.width / 50)
+                if force * (cos * movingBackground.windForce) < 0:  # depasser le 0
                     game.player.move_x(1)
-                    print(1)
                 else:
                     game.player.move_x(force)
-                    print(force)
             # pour le y
             if (-sin) * movingBackground.windForce < 0:
                 force = (-sin) * movingBackground.windForce + (game.player.width / 10)
@@ -219,6 +223,10 @@ def playing(vitesseAcceleration):
                 game.player.move_x(-10)
             elif game.pressed.get(pygame.K_RIGHT):
                 game.player.move_x(10)
+            elif game.pressed.get(pygame.K_DOWN):
+                game.player.move_y(10)
+            elif game.pressed.get(pygame.K_UP):
+                game.player.move_y(-10)
             souffle = False
 
         if game.pressed.get(pygame.K_SPACE):
@@ -237,10 +245,7 @@ def playing(vitesseAcceleration):
             en_jeu = False
             return en_jeu
 
-
-
-
-                #drawMenu()
+            # drawMenu()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

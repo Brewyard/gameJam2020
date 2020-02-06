@@ -36,7 +36,7 @@ class Bird(pygame.sprite.Sprite):
             self.index = (self.index + 1) % len(self.images)
             self.image = self.images[self.index]
 
-        self.rect.move_ip(0, self.speed)
+        self.rect.move_ip(10, self.speed)
 
     def update(self, dt):
         # Switch between the two update methods by commenting/uncommenting.
