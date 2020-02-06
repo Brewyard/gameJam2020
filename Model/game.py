@@ -3,6 +3,7 @@ import pygame
 from utils_game import load_image
 from utils_game import PATH
 from utils_game import scale_image
+from boost import BubbleBoost
 
 
 Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
@@ -27,11 +28,19 @@ class Game():
             "touche fleche gauche": False,
             "touche fleche space" : False
         }
+        self.boosts = []
+
+        self.imagesBoost = [load_image(PATH + "bubbles_group_1.png"), load_image(PATH + "bubbles_group_2.png"), load_image(PATH + "bubbles_group_3.png"),
+                       load_image(PATH + "bubbles_group_4.png"), load_image(PATH + "bubbles_group_5.png")]
 
         self.vitesseAcceleration = 0
         self.vitesseBullePercee = 0
         self.all_sprites = pygame.sprite.Group(self.player)
 
+    def addBoost(self):
+        boost = BubbleBoost(self.imagesBoost)
+        self.boosts.append(boost)
+        return boost
 
 
 

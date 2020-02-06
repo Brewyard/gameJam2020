@@ -53,6 +53,7 @@ class Player(pygame.sprite.Sprite):
     def souffler(self, moveX, moveY):
         test = 77
         # depend de la taille de la bulle
+
         # print('moveY')
         # print(moveY)
         # print('height')
