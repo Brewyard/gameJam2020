@@ -42,6 +42,9 @@ class Game():
                                 scale_image(load_image(PATH + "bird_robin_3.png"), 50, 50)])
         self.birds = []
 
+        self.frequenceBirds = 1000  # plus c'est eleve moins c'est frequent
+        self.frequenceVent = 100
+        self.frequenceBoost = 1000
 
     def resetGame(self):
         self.imagesBird.clear()
@@ -61,5 +64,18 @@ class Game():
         self.birds.append(bird)
         return bird
 
-
+    def setDifficulte(self, difficulte):
+        self.vitesseAcceleration = difficulte
+        if difficulte == 1:
+            self.frequenceBirds = 800
+            self.frequenceVent = 80
+            self.frequenceBoost = 1200
+        elif difficulte == 2:
+            self.frequenceBirds = 600
+            self.frequenceBoost = 1400
+            self.frequenceVent = 60
+        elif difficulte == 4:
+            self.frequenceBirds = 400
+            self.frequenceBoost = 2000
+            self.frequenceVent = 50
 

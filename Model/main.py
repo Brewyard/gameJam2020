@@ -194,18 +194,22 @@ def gameOver():
 
 
 # boucle principale
-def playing(vitesseAcceleration):
-    game.vitesseAcceleration = vitesseAcceleration
-    intervalleAleatoire1 = random.randint(1, 100)
-    compteTours1 = 0
-    intervalleAleatoire2 = random.randint(1, 1000)
-    compteTours2 = 0
-    intervalleAleatoire3 = random.randint(1, 1000)
-    compteTours3 = 0
+def playing(difficulte):
+    game.setDifficulte(difficulte)
+    intervalleAleatoireVent = random.randint(1, game.frequenceVent)
+    compteToursVent = 0
+    intervalleAleatoireBoost = random.randint(1, game.frequenceBoost)
+    compteToursBoost = 0
+    intervalleAleatoireBird = random.randint(1, game.frequenceBirds)
+    compteToursBird = 0
     souffle = False
     secondesDeSouffle = 0
     debut_souffle = pygame.time.get_ticks()
     background_music.play(-1)
+
+    print(game.frequenceVent)
+    print(game.frequenceBoost)
+    print(game.frequenceBirds)
 
     en_jeu = False
     while launch:
@@ -218,24 +222,24 @@ def playing(vitesseAcceleration):
         screen.blit(imageJeu, rect)
         # creation obstacles
         # intervalle random de temps pour la generation d'obstacle
-        if compteTours1 == intervalleAleatoire1:
+        if compteToursVent == intervalleAleatoireVent:
             obstacle1 = movingBackground.generateObstacles()
-            compteTours1 = 0
-            intervalleAleatoire1 = random.randint(1, 100)
+            compteToursVent = 0
+            intervalleAleatoireVent = random.randint(1, game.frequenceVent)
             game.all_sprites.add(obstacle1)
 
         # intervalle random de temps pour la generation de boost
-        if compteTours2 == intervalleAleatoire2:
+        if compteToursBoost == intervalleAleatoireBoost:
             boost = game.addBoost()
-            compteTours2 = 0
-            intervalleAleatoire2 = random.randint(1, 1000)
+            compteToursBoost = 0
+            intervalleAleatoireBoost = random.randint(1, game.frequenceBoost)
             game.all_sprites.add(boost)
 
         # intervalle random de temps pour la generation de bird
-        if compteTours3 == intervalleAleatoire3:
+        if compteToursBird == intervalleAleatoireBird:
             bird = game.addBird()
-            compteTours3 = 0
-            intervalleAleatoire3 = random.randint(1, 1000)
+            compteToursBird = 0
+            intervalleAleatoireBird = random.randint(1, game.frequenceBirds)
             game.all_sprites.add(bird)
 
         movingBackground.fall(game.vitesseAcceleration + game.vitesseBullePercee)
@@ -348,9 +352,9 @@ def playing(vitesseAcceleration):
         # screen.blit(game.player.image, game.player.rect)
         game.all_sprites.draw(screen)
         pygame.display.update()
-        compteTours1 += 1
-        compteTours2 += 1
-        compteTours3 += 1
+        compteToursVent += 1
+        compteToursBoost += 1
+        compteToursBird += 1
 
         if souffle:
             secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 500

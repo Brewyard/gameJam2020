@@ -168,8 +168,8 @@ while run:
                                     selectorLevels += 1
                             elif e.key == pygame.K_RETURN and selectorLevels == 1: #on a choisit le niveau facile, tant que l'on joue rien sinon game over
                                 music_Menu.stop()
-                                vitesse = 0.5
-                                res = playing(vitesse)
+                                difficulte = 0.5
+                                res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
 
@@ -177,23 +177,23 @@ while run:
                             #  ici direction draw_levels
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
                                 music_Menu.stop()
-                                vitesse= 1
-                                res = playing(vitesse)
+                                difficulte= 1
+                                res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
 
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 music_Menu.stop()
-                                vitesse = 2
-                                res = playing(vitesse)
+                                difficulte = 2
+                                res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 music_Menu.stop()
-                                vitesse = 4
-                                res = playing(vitesse)
+                                difficulte = 4
+                                res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
