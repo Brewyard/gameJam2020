@@ -3,10 +3,17 @@ from credits import drawCredits
 from main import playing
 from game import Game
 from main import gameOver
+from utils_game import load_image
+from utils_game import PATH
+from background_anime import BackgroundAnime
+from boost import BubbleBoost
+
 
 pygame.init()
-Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 50)
-TextChiffre = pygame.font.SysFont('arial', 20)
+
+
+Texty = pygame.font.Font('../Fonts/gumbonormal.ttf', 40)
+TextyGrand = pygame.font.Font('../Fonts/gumbonormal.ttf', 80)
 
 selector = 1
 placement = 200
@@ -15,6 +22,15 @@ selectorLevels = 1
 selectorMenu = 1
 music_Menu = pygame.mixer.Sound('../Sounds/Otarie.wav')
 music_bouton = pygame.mixer.Sound('../Sounds/bouton.wav')
+
+imagesBackground = [load_image(PATH + "frame_00.png"), load_image(PATH + "frame_01.png"), load_image(PATH + "frame_02.png"),
+                    load_image(PATH + "frame_03.png"), load_image(PATH + "frame_04.png"), load_image(PATH + "frame_05.png"),
+                    load_image(PATH + "frame_06.png"), load_image(PATH + "frame_07.png"), load_image(PATH + "frame_08.png"),
+                    load_image(PATH + "frame_09.png"), load_image(PATH + "frame_10.png"), load_image(PATH + "frame_11.png"),
+                    load_image(PATH + "frame_12.png"), load_image(PATH + "frame_13.png"), load_image(PATH + "frame_14.png")]
+background_anime = BackgroundAnime(imagesBackground)
+spriteGroup = pygame.sprite.Group(background_anime)
+clock = pygame.time.Clock()
 
 f = open('../highscore.txt', 'r')
 highscore = int(f.read())
@@ -26,6 +42,7 @@ f.close()
 
 def drawMenu():
 
+    dt = clock.tick(60) / 1000
     #Generer la fenetre de notre jeu
     windowSize = (800, 600)
     origin = (0,0)
@@ -37,25 +54,27 @@ def drawMenu():
 
     rect = pygame.Rect(origin,windowSize)
     image = pygame.Surface(windowSize)
-#    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
-    textTitre = Texty.render('Bubble Escape ', 0, (52, 219, 235))
-    textStart = Texty.render('Start', 0, (52, 219, 235))
-    textCredits = Texty.render('Credits', 0, (52, 219, 235))
+    textTitre = TextyGrand.render('Bubble Escape ', 0, (0, 102, 204))
+    textStart = Texty.render('Start', 0, (0, 153, 255))
+    textCredits = Texty.render('Credits', 0, (0, 153, 255))
     textQuit = Texty.render('Quit ', 0, (255, 0, 0))
-    textHighscore = TextChiffre.render("Highscore : "+str(highscore),0,(52, 159, 235))
-    imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
+
+    textHighscore = Texty.render("Highscore : "+str(highscore),0,(0, 153, 255))
+    imageFleche = pygame.image.load("../Images/bubble.png")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
-    screen.blit(textTitre, (300, 150))
-    screen.blit(textStart, (300, 200))
-    screen.blit(textCredits, (300, 250))
-    screen.blit(textQuit, (300, 300))
-    screen.blit(textHighscore,(50,50))
+    spriteGroup.update(dt)
+    spriteGroup.draw(screen)
+    screen.blit(textTitre, (40, 110))
+    screen.blit(textStart, (300, 300))
+    screen.blit(textCredits, (300, 350))
+    screen.blit(textQuit, (300, 400))
+    screen.blit(textHighscore,(20,20))
     if selectorMenu == 1:
-        placement = 200
+        placement = 310
     elif selectorMenu == 2:
-        placement = 250
+        placement = 360
     elif selectorMenu == 3:
-        placement = 300
+        placement = 410
     screen.blit(imageFleche,(260, placement))
     pygame.display.update()
 
@@ -63,6 +82,7 @@ def drawMenu():
 
 
 def draw_levels():
+    dt = clock.tick(60) / 1000
     Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 50)
     placement = 200
     global selectorLevels
@@ -72,15 +92,17 @@ def draw_levels():
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin, windowSize)
     image = pygame.Surface(windowSize)
-#    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
-    textLevelFacile = Texty.render('Facile ', 0, (52, 219, 235))
-    textLevelNormal = Texty.render('Normal', 0, (52, 219, 235))
-    textLevelPro = Texty.render('Pro', 0, (52, 219, 235))
-    textLevelExpert = Texty.render('Expert', 0, (52, 219, 235))
+    # imagesBackground
+    textLevelFacile = Texty.render('Facile ', 0, (0, 153, 255))
+    textLevelNormal = Texty.render('Normal', 0, (0, 153, 255))
+    textLevelPro = Texty.render('Pro', 0, (0, 153, 255))
+    textLevelExpert = Texty.render('Expert', 0, (0, 153, 255))
     textLevelRetour= Texty.render('Retour', 0, (58, 52, 235))
 
-    imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
+    imageFleche = pygame.image.load("../Images/bubble.png")
     imageFleche = pygame.transform.scale(imageFleche, (30, 30))
+    spriteGroup.update(dt)
+    spriteGroup.draw(screen)
     screen.blit(textLevelFacile, (300, 150))
     screen.blit(textLevelNormal, (300, 200))
     screen.blit(textLevelPro, (300, 250))
@@ -88,15 +110,15 @@ def draw_levels():
     screen.blit(textLevelRetour, (300, 350))
 
     if selectorLevels == 1:
-        placement = 150
+        placement = 160
     elif selectorLevels == 2:
-        placement = 200
+        placement = 210
     elif selectorLevels == 3:
-        placement = 250
+        placement = 260
     elif selectorLevels == 4:
-        placement = 300
+        placement = 310
     elif selectorLevels ==5:
-        placement = 350
+        placement = 360
     screen.blit(imageFleche, (260, placement))
     pygame.display.update()
 
@@ -107,8 +129,8 @@ music_Menu.play(-1)
 
 run = True
 while run:
+    drawMenu()
     for event in pygame.event.get(): ########boucle du menu
-        drawMenu()
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
@@ -159,7 +181,6 @@ while run:
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
-                                    inpt()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 music_Menu.stop()
@@ -167,7 +188,6 @@ while run:
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
-                                    inpt()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 5:
                                 music_Menu.stop()
