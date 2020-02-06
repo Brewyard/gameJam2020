@@ -13,6 +13,7 @@ game = Game()
 selectorLevels = 1
 selectorMenu = 1
 music_Menu = pygame.mixer.Sound('../Sounds/Otarie.wav')
+music_bouton = pygame.mixer.Sound('../Sounds/bouton.wav')
 
 f = open('../highscore.txt', 'r')
 highscore = int(f.read())
@@ -105,9 +106,11 @@ while run:
             exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
+                music_bouton.play()
                 if selectorMenu != 1:
                     selectorMenu -= 1
             elif event.key == pygame.K_DOWN:
+                music_bouton.play()
                 if selectorMenu != 3:
                     selectorMenu += 1
             elif event.key == pygame.K_RETURN and selectorMenu == 1: #####On choisit de jouer => levels
@@ -132,7 +135,7 @@ while run:
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
-                                         #  ici direction draw_levels
+                            #  ici direction draw_levels
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
                                 music_Menu.stop()
                                 vitesse= 1
@@ -142,14 +145,14 @@ while run:
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 music_Menu.stop()
-                                vitesse = 1.5
+                                vitesse = 2
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 music_Menu.stop()
-                                vitesse = 2
+                                vitesse = 4
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()

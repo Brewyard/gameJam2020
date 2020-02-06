@@ -67,12 +67,12 @@ def gameOver():
         f = open('../highscore.txt','w')
         f.write(str(score))
         f.close()
-
     f = open('../highscore.txt', 'r')
     highscore = int(f.read())
     f.close()
     windowSize = (800, 600)
     origin = (0, 0)
+
 
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin, windowSize)
@@ -87,7 +87,7 @@ def gameOver():
     screen.blit(textHighscore, (50, 50))
     screen.blit(textScore, (50, 100))
     pygame.display.update()
-    time.sleep(5)
+    time.sleep(5) #au bout de 5 seconde on revient au menus du choix des niveaux
     return
 
 
@@ -103,7 +103,7 @@ def playing(vitesseAcceleration):
     souffle = False
     secondesDeSouffle = 0
     debut_souffle = pygame.time.get_ticks()
-    background_music.play()
+    background_music.play(-1)
 
     en_jeu = False
     while launch:
@@ -253,7 +253,7 @@ def playing(vitesseAcceleration):
         compteTours3 += 1
 
         if souffle:
-            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000
+            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 500
 
         if movingBackground.obstacles:
             if rect.contains(movingBackground.obstacles[0]):
