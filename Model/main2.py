@@ -2,6 +2,7 @@ import pygame
 from credits import drawCredits
 from main import playing
 from game import Game
+from main import gameOver
 
 pygame.init()
 Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
@@ -11,6 +12,8 @@ placement = 200
 game = Game()
 selectorLevels = 1
 selectorMenu = 1
+music_Menu = pygame.mixer.Sound('../Sounds/initialD.wav')
+
 f = open('../highscore.txt', 'r')
 highscore = int(f.read())
 f.close()
@@ -22,14 +25,15 @@ def drawMenu():
     global highscore
     global selectorMenu
     placement = 200
+    pygame.display.set_caption('Le Menu')
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin,windowSize)
     image = pygame.Surface(windowSize)
     imageJeu = pygame.image.load("../Images/background_Menu.jpg")
     textTitre = Texty.render('Bubble Escape ', 0, (255, 0, 0))
-    textStart = Texty.render('start', 0, (255, 0, 0))
+    textStart = Texty.render('Start', 0, (255, 0, 0))
     textCredits = Texty.render('Credits', 0, (255, 0, 0))
-    textQuit = Texty.render('quit ', 0, (255, 0, 0))
+    textQuit = Texty.render('Quit ', 0, (255, 0, 0))
     textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
@@ -56,6 +60,7 @@ def draw_levels():
     global selectorLevels
     windowSize = (800, 600)
     origin = (0, 0)
+    pygame.display.set_caption('Les Niveaux')
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin, windowSize)
     image = pygame.Surface(windowSize)
@@ -88,9 +93,12 @@ def draw_levels():
     pygame.display.update()
 
 
+
+
+music_Menu.play()
 run = True
 while run:
-    for event in pygame.event.get():
+    for event in pygame.event.get(): ########boucle du menu
         drawMenu()
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -102,7 +110,8 @@ while run:
             elif event.key == pygame.K_DOWN:
                 if selectorMenu != 3:
                     selectorMenu += 1
-            elif event.key == pygame.K_RETURN and selectorMenu == 1:
+            elif event.key == pygame.K_RETURN and selectorMenu == 1: #####On choisit de jouer => levels
+                music_Menu.stop()
                 truuuue = True
                 quitter = False
                 while truuuue:
@@ -117,18 +126,40 @@ while run:
                             elif e.key == pygame.K_DOWN:
                                 if selectorLevels != 5:
                                     selectorLevels += 1
-                            elif e.key == pygame.K_RETURN and selectorLevels == 1:
+                            elif e.key == pygame.K_RETURN and selectorLevels == 1: #on a choisit le niveau facile, tant que l'on joue rien sinon game over
                                 vitesse = 0.5
-                                playing(vitesse)
+                                res = playing(vitesse)
+                                if not res: ##on arrive sur la page game over si jeu finit
+                                    gameOver()
+                                    jattend = True
+                                    quitter2 = False
+                                    print("dans le menu game over")
+                                    while jattend: ##on attend un evenement pour retourner a la fenetre des niveaux
+                                        for x in pygame.event.get():
+                                            if x.type == pygame.QUIT:
+                                                pygame.quit()
+                                                exit()
+                                            elif x.type == pygame.KEYDOWN:
+                                                if x.key == pygame.K_RETURN:
+                                                    quitter2 = True
+                                                    print("je vais au menu des niveaux")
+                                                    break
+                                                drawMenu()
+                                                pygame.display.update()
+                                            if quitter2:
+                                                quitter2 = False
+                                                break
+                                          #  ici direction draw_levels
+
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
                                 vitesse= 1
-                                playing(vitesse)
+                                res = playing(vitesse)
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 vitesse = 1.5
-                                playing(vitesse)
+                                res = playing(vitesse)
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 vitesse = 2
-                                playing(vitesse)
+                                res = playing(vitesse)
                             elif e.key == pygame.K_RETURN and selectorLevels == 5:
                                 quitter = True
                                 break
@@ -137,6 +168,7 @@ while run:
                     if quitter:
                         quitter = False
                         break
+
             elif event.key == pygame.K_RETURN and selectorMenu == 2: #bouton credits
                 drawCredits()
             elif event.key == pygame.K_RETURN and selectorMenu == 3: #bouton quit

@@ -13,6 +13,7 @@ transparent = (0, 0, 0, 0)
 # Generer la fenetre de notre jeu
 windowSize = (800, 600)
 origin = (0, 0)
+pygame.display.set_caption('Joue TARBANAK')
 screen = pygame.display.set_mode(windowSize)
 rect = pygame.Rect(origin, windowSize)
 image = pygame.Surface(windowSize)
@@ -25,7 +26,9 @@ jeu = False
 # generation de sons
 bubble_pop = pygame.mixer.Sound('../Sounds/bubble-pop.wav')
 windy_today = pygame.mixer.Sound('../Sounds/wind.wav')
-background_music = pygame.mixer.Sound('../Sounds/yes.wav')
+background_music = pygame.mixer.Sound('../Sounds/Play.wav')
+
+
 # chargement du jeu
 game = Game()
 clock = pygame.time.Clock()
@@ -52,7 +55,7 @@ def gameOver():
     global windowSize,origin,screen
     placement = 300
     selectorGameOver = 1
-    # pb : fait le son en double si on meurt alors sond pop et image disparait
+    # pb : fait le son en double si on meurt alors son pop et image disparait
     bubble_pop.play()
     game.player.image.fill(transparent)
     #enregistrement du score dans un fichier
@@ -69,10 +72,12 @@ def gameOver():
     f.close()
     windowSize = (800, 600)
     origin = (0, 0)
+
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin, windowSize)
     image = pygame.Surface(windowSize)
     imageJeu = pygame.image.load("../Images/background_Menu.jpg")
+    pygame.display.set_caption('GameOver TARBANAK')
 
     textMort = Texty.render('Game Over ', 0, (0, 0, 255))
     textRetour = Texty.render('Retour ', 0, (0, 0, 255))
@@ -100,8 +105,11 @@ def playing(vitesseAcceleration):
     souffle = False
     secondesDeSouffle = 0
     debut_souffle = pygame.time.get_ticks()
+    background_music.play()
 
+    en_jeu = False
     while launch:
+        en_jeu = True
         global score
         clock.tick(60)
         dt = clock.tick(60) / 1000
@@ -155,18 +163,12 @@ def playing(vitesseAcceleration):
             score += 1
             riendutout = 0
         else:
-            gameOver()
-            true = True
-            quitter = False
-            while true:
-                for x in pygame.event.get():
-                    if x.type == pygame.QUIT:
-                        pygame.quit()
-                        exit()
-                    elif x.type == pygame.KEYDOWN:
-                        if x.key == pygame.K_RETURN and selectorGameOver == 1:
-                            quitter = True
-                            break
+            background_music.stop()
+            en_jeu = False
+            return en_jeu
+
+
+
 
                 #drawMenu()
 

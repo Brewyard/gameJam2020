@@ -55,11 +55,6 @@ class Player(pygame.sprite.Sprite):
 
     def souffler(self, moveX, moveY):
         # depend de la taille de la bulle
-        print('moveY')
-        print(moveY)
-        print('height')
-        print(self.rect.height/50)
-
         if moveX <= 0:
             self.rect.x += moveX + (self.rect.width / 90)
         else:
