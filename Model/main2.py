@@ -137,14 +137,23 @@ while run:
                                 music_Menu.stop()
                                 vitesse= 1
                                 res = playing(vitesse)
+                                if not res: ##on arrive sur la page game over si jeu finit
+                                    gameOver()
+                                    break
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 music_Menu.stop()
                                 vitesse = 1.5
                                 res = playing(vitesse)
+                                if not res: ##on arrive sur la page game over si jeu finit
+                                    gameOver()
+                                    break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 music_Menu.stop()
                                 vitesse = 2
                                 res = playing(vitesse)
+                                if not res: ##on arrive sur la page game over si jeu finit
+                                    gameOver()
+                                    break
                             elif e.key == pygame.K_RETURN and selectorLevels == 5:
                                 music_Menu.stop()
                                 quitter = True
