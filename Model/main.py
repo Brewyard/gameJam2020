@@ -191,6 +191,9 @@ def gameOver():
     score = 0
     while 1:
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
             if event.type == pygame.KEYDOWN:
                 return
 
