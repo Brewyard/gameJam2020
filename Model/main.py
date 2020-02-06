@@ -234,6 +234,7 @@ def playing(vitesseAcceleration):
             game.player.resetPlayer()
             game.birds.clear()
             movingBackground.obstacles.clear()
+            del game.all_sprites
             en_jeu = False
             return en_jeu
 
