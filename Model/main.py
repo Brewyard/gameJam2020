@@ -82,7 +82,7 @@ def text1(word,x,y):
 
 def inpt():
     word=""
-    text1("Please enter your name: ",300,400) #example asking name
+    text1("Please enter your name: ", 300, 400) #example asking name
     pygame.display.flip()
     done = True
     while done:
@@ -145,14 +145,17 @@ def inpt():
                     word+=chr(event.key)
                 if event.key == pygame.K_RETURN:
                     done=False
+                print(word)
+                text1(word, 300, 500)
+                pygame.display.flip()
     return word
 
 def gameOver():
     Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 20)
     TextChiffre = pygame.font.SysFont('arial', 20)
 
-    global score,placement,selectorGameOver
-    global windowSize,origin,screen
+    global score, placement, selectorGameOver
+    global windowSize, origin, screen
     placement = 300
     selectorGameOver = 1
     bubble_pop.play()
