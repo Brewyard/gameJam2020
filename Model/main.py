@@ -332,6 +332,7 @@ def playing(difficulte):
             ilPeut = game.player.retrecirOuAgrandir(game.player.width - 2, game.player.height - 2)  # retrecit bulle
             if ilPeut:
                 game.player.move_y(-10)
+                game.player.state = 1
 
         if rect.inflate(150, 150).contains(game.player.rect):
             score += 1
@@ -390,3 +391,5 @@ def playing(difficulte):
                     elif event.type == pygame.KEYDOWN:
                         reprendre = True
                         game.pressed[pygame.K_RETURN] = False
+
+        game.player.state = 0 # enleve le boost

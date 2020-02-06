@@ -17,7 +17,14 @@ class Game():
         for image in imagesBulle:
             imagesBulleScaled.append(scale_image(image, 100, 100))
 
-        self.player = Player(imagesBulleScaled)
+        imagesBulleBoosted = [load_image(PATH + "bubble_boosted_1.png"), load_image(PATH + "bubble_boosted_2.png"),
+                       load_image(PATH + "bubble_boosted_3.png"),
+                       load_image(PATH + "bubble_boosted_4.png")]
+        imagesBulleBoostedScaled = []
+        for image in imagesBulleBoosted:
+            imagesBulleBoostedScaled.append(scale_image(image, 100, 100))
+
+        self.player = Player(imagesBulleScaled, imagesBulleBoostedScaled)
         self.pressed = {
             "touche fleche droite" : True,
             "touche fleche gauche": False,

@@ -3,13 +3,15 @@ from utils_game import scale_image
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, images):
+    def __init__(self, images, imagesBoost):
         super(Player, self).__init__()
         size = (100, 100)
 
         self.rect = pygame.Rect((300, 300), size)
         self.images = images
+        self.imagesBoost = imagesBoost
         self.index = 0
+        self.indexBoost = 0
         self.image = images[self.index]
         self.velocityX = 0
         self.velocityY = 0
@@ -24,6 +26,8 @@ class Player(pygame.sprite.Sprite):
         self.width = self.rect.width
         self.height = self.rect.height
 
+        self.state = 0 # boosted or not
+
     def resetPlayer(self):
         size = (100, 100)
         self.rect = pygame.Rect((300, 300), size)
@@ -37,8 +41,12 @@ class Player(pygame.sprite.Sprite):
         self.current_time += dt
         if self.current_time >= self.animation_time:
             self.current_time = 0
-            self.index = (self.index + 1) % len(self.images)
-            self.image = self.images[self.index]
+            if self.state == 0:
+                self.index = (self.index + 1) % len(self.images)
+                self.image = self.images[self.index]
+            else:
+                self.indexBoost = (self.indexBoost + 1) % len(self.imagesBoost)
+                self.image = self.imagesBoost[self.indexBoost]
 
         self.rect.move_ip(self.velocityX, self.velocityY)
 
