@@ -11,7 +11,7 @@ placement = 200
 game = Game()
 selectorLevels = 1
 selectorMenu = 1
-music_Menu = pygame.mixer.Sound('../Sounds/initialD.wav')
+music_Menu = pygame.mixer.Sound('../Sounds/Otarie.wav')
 
 f = open('../highscore.txt', 'r')
 highscore = int(f.read())
@@ -109,7 +109,6 @@ while run:
                 if selectorMenu != 3:
                     selectorMenu += 1
             elif event.key == pygame.K_RETURN and selectorMenu == 1: #####On choisit de jouer => levels
-                music_Menu.stop()
                 truuuue = True
                 quitter = False
                 while truuuue:
@@ -125,39 +124,36 @@ while run:
                                 if selectorLevels != 5:
                                     selectorLevels += 1
                             elif e.key == pygame.K_RETURN and selectorLevels == 1: #on a choisit le niveau facile, tant que l'on joue rien sinon game over
+                                music_Menu.stop()
                                 vitesse = 0.5
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
-                                    jattend = True
-                                    quitter2 = False
-                                    print("dans le menu game over")
-                                    while jattend: ##on attend un evenement pour retourner a la fenetre des niveaux
-                                        for x in pygame.event.get():
-                                            if x.type == pygame.QUIT:
-                                                pygame.quit()
-                                                exit()
-                                            elif x.type == pygame.KEYDOWN:
-                                                if x.key == pygame.K_RETURN:
-                                                    quitter2 = True
-                                                    print("je vais au menu des niveaux")
-                                                    break
-                                                drawMenu()
-                                            if quitter2:
-                                                quitter2 = False
-                                                break
-                                          #  ici direction draw_levels
-
+                                    break
+                                         #  ici direction draw_levels
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
+                                music_Menu.stop()
                                 vitesse= 1
                                 res = playing(vitesse)
+                                if not res: ##on arrive sur la page game over si jeu finit
+                                    gameOver()
+                                    break
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
+                                music_Menu.stop()
                                 vitesse = 1.5
                                 res = playing(vitesse)
+                                if not res: ##on arrive sur la page game over si jeu finit
+                                    gameOver()
+                                    break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
+                                music_Menu.stop()
                                 vitesse = 2
                                 res = playing(vitesse)
+                                if not res: ##on arrive sur la page game over si jeu finit
+                                    gameOver()
+                                    break
                             elif e.key == pygame.K_RETURN and selectorLevels == 5:
+                                music_Menu.stop()
                                 quitter = True
                                 break
 
