@@ -6,12 +6,16 @@ from main import gameOver
 from utils_game import load_image
 from utils_game import PATH
 from background_anime import BackgroundAnime
+import os
 from boost import BubbleBoost
 
 
 pygame.init()
+
+
 Texty = pygame.font.Font('../Fonts/gumbonormal.ttf', 40)
 TextyGrand = pygame.font.Font('../Fonts/gumbonormal.ttf', 80)
+
 selector = 1
 placement = 200
 game = Game()
@@ -29,8 +33,18 @@ background_anime = BackgroundAnime(imagesBackground)
 spriteGroup = pygame.sprite.Group(background_anime)
 clock = pygame.time.Clock()
 
+if os.stat("../highscore.txt").st_size == 0:
+    f = open('../highscore.txt','w')
+    f.write('0')
+    f.close()
+
+
 
 def drawMenu():
+    f = open('../name.txt', 'r')
+    name = f.read()
+    f.close()
+
     f = open('../highscore.txt', 'r')
     highscore = int(f.read())
     f.close()
@@ -48,16 +62,18 @@ def drawMenu():
     textStart = Texty.render('Start', 0, (0, 153, 255))
     textCredits = Texty.render('Credits', 0, (0, 153, 255))
     textQuit = Texty.render('Quit ', 0, (255, 0, 0))
+    textName = Texty.render(name,0,(0, 153, 255))
     textHighscore = Texty.render("Highscore : "+str(highscore),0,(0, 153, 255))
     imageFleche = pygame.image.load("../Images/bubble.png")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
     spriteGroup.update(dt)
     spriteGroup.draw(screen)
+    screen.blit(textName,(20,10))
     screen.blit(textTitre, (40, 110))
     screen.blit(textStart, (300, 300))
     screen.blit(textCredits, (300, 350))
     screen.blit(textQuit, (300, 400))
-    screen.blit(textHighscore,(20,20))
+    screen.blit(textHighscore,(20,50))
     if selectorMenu == 1:
         placement = 310
     elif selectorMenu == 2:
@@ -66,6 +82,7 @@ def drawMenu():
         placement = 410
     screen.blit(imageFleche,(260, placement))
     pygame.display.update()
+
 
 
 
@@ -114,6 +131,7 @@ def draw_levels():
 
 
 music_Menu.play(-1)
+
 run = True
 while run:
     drawMenu()
@@ -147,30 +165,32 @@ while run:
                                     selectorLevels += 1
                             elif e.key == pygame.K_RETURN and selectorLevels == 1: #on a choisit le niveau facile, tant que l'on joue rien sinon game over
                                 music_Menu.stop()
-                                vitesse = 0.5
-                                res = playing(vitesse)
+                                difficulte = 0.5
+                                res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
+
                                     break
                             #  ici direction draw_levels
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
                                 music_Menu.stop()
-                                vitesse= 1
-                                res = playing(vitesse)
+                                difficulte= 1
+                                res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
+
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 music_Menu.stop()
-                                vitesse = 2
-                                res = playing(vitesse)
+                                difficulte = 2
+                                res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 music_Menu.stop()
-                                vitesse = 4
-                                res = playing(vitesse)
+                                difficulte = 4
+                                res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
