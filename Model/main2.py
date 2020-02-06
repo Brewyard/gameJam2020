@@ -6,6 +6,7 @@ from main import gameOver
 from utils_game import load_image
 from utils_game import PATH
 from background_anime import BackgroundAnime
+import os
 from boost import BubbleBoost
 
 
@@ -32,22 +33,28 @@ background_anime = BackgroundAnime(imagesBackground)
 spriteGroup = pygame.sprite.Group(background_anime)
 clock = pygame.time.Clock()
 
-f = open('../highscore.txt', 'r')
-highscore = int(f.read())
-f.close()
-
-
+if os.stat("../highscore.txt").st_size == 0:
+    f = open('../highscore.txt','w')
+    f.write('0')
+    f.close()
 
 
 
 def drawMenu():
+    f = open('../name.txt', 'r')
+    name = f.read()
+    f.close()
+
+    f = open('../highscore.txt', 'r')
+    highscore = int(f.read())
+    f.close()
+
 
     dt = clock.tick(60) / 1000
     #Generer la fenetre de notre jeu
     windowSize = (800, 600)
     origin = (0,0)
     screen = pygame.display.set_mode(windowSize)
-    global highscore
     global selectorMenu
     placement = 200
     pygame.display.set_caption('Le Menu')
@@ -58,17 +65,18 @@ def drawMenu():
     textStart = Texty.render('Start', 0, (0, 153, 255))
     textCredits = Texty.render('Credits', 0, (0, 153, 255))
     textQuit = Texty.render('Quit ', 0, (255, 0, 0))
-
+    textName = Texty.render(name,0,(0, 153, 255))
     textHighscore = Texty.render("Highscore : "+str(highscore),0,(0, 153, 255))
     imageFleche = pygame.image.load("../Images/bubble.png")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
     spriteGroup.update(dt)
     spriteGroup.draw(screen)
+    screen.blit(textName,(20,10))
     screen.blit(textTitre, (40, 110))
     screen.blit(textStart, (300, 300))
     screen.blit(textCredits, (300, 350))
     screen.blit(textQuit, (300, 400))
-    screen.blit(textHighscore,(20,20))
+    screen.blit(textHighscore,(20,50))
     if selectorMenu == 1:
         placement = 310
     elif selectorMenu == 2:

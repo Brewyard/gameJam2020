@@ -141,16 +141,12 @@ def inpt():
                     word+=chr(event.key)
                 if event.key == pygame.K_y:
                     word+=chr(event.key)
-                if event.key == pygame.K_d:
-                    word+=chr(event.key)
-                if event.key == pygame.K_d:
-                    word+=chr(event.key)
                 if event.key == pygame.K_z:
                     word+=chr(event.key)
                 if event.key == pygame.K_RETURN:
                     done=False
                 print(word)
-    return text1(word,700,30)
+    return word
 
 def gameOver():
     Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 20)
@@ -160,21 +156,25 @@ def gameOver():
     global windowSize,origin,screen
     placement = 300
     selectorGameOver = 1
-    inpt()
-    # pb : fait le son en double si on meurt alors son pop et image disparait
     bubble_pop.play()
     game.player.image.fill(transparent)
-    # enregistrement du score dans un fichier
-    f = open('../highscore.txt', 'r')
+
+
+    nameEntre = inpt()
+    f = open('../name.txt', 'w')
+    f.write(nameEntre)
+    f.close()
+
+    f = open('../highscore.txt','r')
     highscore = int(f.read())
     f.close()
     if score >= highscore:
-        f = open('../highscore.txt', 'w')
-        f.write(str(score))
+        highscore = score
+        f = open('../highscore.txt','w')
+        f.write(str(highscore))
         f.close()
-    f = open('../highscore.txt', 'r')
-    highscore = int(f.read())
-    f.close()
+
+
     windowSize = (800, 600)
     origin = (0, 0)
 
@@ -183,7 +183,6 @@ def gameOver():
     pygame.display.set_caption('GameOver TARBANAK')
     textMort = Texty.render('Game Over ', 0, (0, 0, 255))
     textHighscore = TextChiffre.render("Highscore : "+str(highscore),0,(255,0,0))
-
     textScore = TextChiffre.render("Score : "+str(score),0,(255,0,0))
     screen.blit(textMort, (300, 200))
     screen.blit(textHighscore, (50, 50))
