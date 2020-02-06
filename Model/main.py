@@ -105,6 +105,8 @@ def playing(vitesseAcceleration):
     compteTours1 = 0
     intervalleAleatoire2 = random.randint(1, 1000)
     compteTours2 = 0
+    intervalleAleatoire3 = random.randint(1, 1000)
+    compteTours3 = 0
     souffle = False
     secondesDeSouffle = 0
     debut_souffle = pygame.time.get_ticks()
@@ -134,6 +136,13 @@ def playing(vitesseAcceleration):
             intervalleAleatoire2 = random.randint(1, 1000)
             game.all_sprites.add(boost)
 
+        # intervalle random de temps pour la generation de bird
+        if compteTours3 == intervalleAleatoire3:
+            bird = game.addBird()
+            compteTours3 = 0
+            intervalleAleatoire3 = random.randint(1, 100)
+            game.all_sprites.add(bird)
+
         movingBackground.fall(game.vitesseAcceleration + game.vitesseBullePercee)
         # for obstacle in movingBackground.obstacles:
         #     screen.blit(obstacle.img, obstacle.rect)
@@ -150,7 +159,7 @@ def playing(vitesseAcceleration):
         for boost in game.boosts:
             if boost.touch(game.player.rect):
                 #  gonfler la bulle et delete le boost
-                game.player.retrecirOuAgrandir(game.player.width + 10, game.player.height + 10)
+                game.player.retrecirOuAgrandir(game.player.width + 15, game.player.height + 15)
                 game.boosts.remove(boost)
                 game.all_sprites.remove(boost)
             # si boost sorti de l'ecran
@@ -158,15 +167,53 @@ def playing(vitesseAcceleration):
                 game.boosts.remove(boost)
                 game.all_sprites.remove(boost)
 
+        # si bulle touche boost
+        for bird in game.birds:
+            if bird.touch(game.player.rect):
+                # gameover
+                background_music.stop()
+                en_jeu = False
+                return en_jeu
+            # si bird sorti de l'ecran
+            if not rect.inflate(200, 200).contains(bird.rect):
+                game.boosts.remove(bird)
+                game.all_sprites.remove(bird)
+
         # deplacement de la bulle(player) avec collision aux murs
         if souffle and secondesDeSouffle < 1:  # il ne peut pas se deplacer le temps du souffle
             coordonnees = math.radians(movingBackground.windDirection)
             sin = math.sin(coordonnees)
             cos = math.cos(coordonnees)
-            game.player.move_x(cos*movingBackground.windForce)
-            print(cos*movingBackground.windForce)
-            game.player.move_y((-sin)*movingBackground.windForce)
-            print((-sin)*movingBackground.windForce)
+            # pour le x
+            if cos*movingBackground.windForce < 0:
+                force = cos*movingBackground.windForce+(game.player.width/50)
+                if force * (cos * movingBackground.windForce) < 0: # depasser le 0
+                    game.player.move_x(-1)
+                    print(-1)
+                else:
+                    game.player.move_x(force)
+                    print(force)
+            else:
+                force = cos*movingBackground.windForce-(game.player.width/50)
+                if force * (cos * movingBackground.windForce) < 0: # depasser le 0
+                    game.player.move_x(1)
+                    print(1)
+                else:
+                    game.player.move_x(force)
+                    print(force)
+            # pour le y
+            if (-sin) * movingBackground.windForce < 0:
+                force = (-sin) * movingBackground.windForce + (game.player.width / 10)
+                if force * ((-sin) * movingBackground.windForce) < 0:  # depasser le 0
+                    game.player.move_y(-1)
+                else:
+                    game.player.move_y(force)
+            else:
+                force = (-sin) * movingBackground.windForce - (game.player.width / 10)
+                if force * ((-sin) * movingBackground.windForce) < 0:  # depasser le 0
+                    game.player.move_y(1)
+                else:
+                    game.player.move_y(force)
         else:
             if game.pressed.get(pygame.K_LEFT):
                 game.player.move_x(-10)
@@ -176,7 +223,7 @@ def playing(vitesseAcceleration):
 
         if game.pressed.get(pygame.K_SPACE):
             # reduire taille bulle et accelerer bulle, la bulle etant plus petite, elle resiste moins au vent
-            ilPeut = game.player.retrecirOuAgrandir(game.player.width - 3, game.player.height - 3)  # retrecit bulle
+            ilPeut = game.player.retrecirOuAgrandir(game.player.width - 2, game.player.height - 2)  # retrecit bulle
             if ilPeut:
                 game.player.move_y(-10)
         # else:
@@ -210,6 +257,7 @@ def playing(vitesseAcceleration):
         pygame.display.update()
         compteTours1 += 1
         compteTours2 += 1
+        compteTours3 += 1
 
         if souffle:
             secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000

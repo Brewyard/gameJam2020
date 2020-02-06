@@ -1,25 +1,16 @@
 import pygame
 import random
-from utils_game import scale_image
 
 
-class Obstacle(pygame.sprite.Sprite):
+class Bird(pygame.sprite.Sprite):
     def __init__(self, images):
-        super(Obstacle, self).__init__()
-        self.longueurVent = random.randint(50, 200)
-        size = (self.longueurVent, self.longueurVent / 2.5)
+        super(Bird, self).__init__()
 
-        imagesScaled = []
-        for image in images:
-            imagesScaled.append(scale_image(image, self.longueurVent, int(self.longueurVent / 2.5)))
-        self.images = imagesScaled
-        self.angle = random.randint(0, 360)
-        self.images = [pygame.transform.rotate(image, self.angle) for image in self.images]
-
-        self.rect = pygame.Rect(((random.randint(0, 800-self.longueurVent), 0), size))
-
+        size = (50, 50)
+        self.images = images
+        self.rect = pygame.Rect((random.randint(0, 800 - 50), 0), size)
         self.index = 0
-        self.image = images[self.index]
+        self.image = self.images[self.index]
 
         self.animation_time = 0.02
         self.current_time = 0
@@ -55,7 +46,7 @@ class Obstacle(pygame.sprite.Sprite):
     def fall(self, vitesse):
         self.rect.y += self.speed + vitesse
 
-    def windTouch2(self, target):
+    def touch(self, target):
         hitbox = self.rect.inflate(-5, -5)
         if hitbox.colliderect(target):
             return True
