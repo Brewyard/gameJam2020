@@ -207,6 +207,9 @@ def playing(difficulte):
     debut_souffle = pygame.time.get_ticks()
     background_music.play(-1)
 
+    compteToursGlobalPourAcceleration = 0
+    vitesseBoostEtOiseauEnPlus = 0
+
     print(game.frequenceVent)
     print(game.frequenceBoost)
     print(game.frequenceBirds)
@@ -224,20 +227,21 @@ def playing(difficulte):
         # intervalle random de temps pour la generation d'obstacle
         if compteToursVent == intervalleAleatoireVent:
             obstacle1 = movingBackground.generateObstacles()
+            obstacle1.speed += vitesseBoostEtOiseauEnPlus
             compteToursVent = 0
             intervalleAleatoireVent = random.randint(1, game.frequenceVent)
             game.all_sprites.add(obstacle1)
 
         # intervalle random de temps pour la generation de boost
         if compteToursBoost == intervalleAleatoireBoost:
-            boost = game.addBoost()
+            boost = game.addBoost(vitesseBoostEtOiseauEnPlus)
             compteToursBoost = 0
             intervalleAleatoireBoost = random.randint(1, game.frequenceBoost)
             game.all_sprites.add(boost)
 
         # intervalle random de temps pour la generation de bird
         if compteToursBird == intervalleAleatoireBird:
-            bird = game.addBird()
+            bird = game.addBird(vitesseBoostEtOiseauEnPlus)
             compteToursBird = 0
             intervalleAleatoireBird = random.randint(1, game.frequenceBirds)
             game.all_sprites.add(bird)
@@ -367,3 +371,10 @@ def playing(difficulte):
 
         game.player.velocityX = 0
         game.player.velocityY = 0
+
+        compteToursGlobalPourAcceleration += 1
+        print(compteToursGlobalPourAcceleration)
+
+        if compteToursGlobalPourAcceleration == 8000:
+            compteToursGlobalPourAcceleration = 0
+            vitesseBoostEtOiseauEnPlus += 1

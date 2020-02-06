@@ -18,7 +18,7 @@ class Bird(pygame.sprite.Sprite):
         self.animation_frames = 6
         self.current_frame = 0
 
-        self.speed = 1
+        self.speed = 2
 
     def update_time_dependent(self, dt):
         self.current_time += dt

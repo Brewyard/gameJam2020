@@ -53,29 +53,31 @@ class Game():
         self.birds.clear()
 
 
-    def addBoost(self):
+    def addBoost(self, vitesse):
         boost = BubbleBoost(self.imagesBoost)
+        boost.speed += vitesse
         self.boosts.append(boost)
         return boost
 
-    def addBird(self):
+    def addBird(self, vitesse):
         birdIndice = random.randint(0, 2)
         bird = Bird(self.imagesBird[birdIndice])
+        bird.speed += vitesse
         self.birds.append(bird)
         return bird
 
     def setDifficulte(self, difficulte):
         self.vitesseAcceleration = difficulte
         if difficulte == 1:
-            self.frequenceBirds = 800
-            self.frequenceVent = 80
+            self.frequenceBirds = 500
+            self.frequenceVent = 60
             self.frequenceBoost = 1200
         elif difficulte == 2:
-            self.frequenceBirds = 600
+            self.frequenceBirds = 300
             self.frequenceBoost = 1400
-            self.frequenceVent = 60
+            self.frequenceVent = 40
         elif difficulte == 4:
-            self.frequenceBirds = 400
+            self.frequenceBirds = 100
             self.frequenceBoost = 2000
-            self.frequenceVent = 50
+            self.frequenceVent = 25
 
