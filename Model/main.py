@@ -19,7 +19,7 @@ transparent = (0, 0, 0, 0)
 # Generer la fenetre de notre jeu
 windowSize = (800, 600)
 origin = (0, 0)
-pygame.display.set_caption('Joue TARBANAK')
+pygame.display.set_caption('Bubble Escape')
 screen = pygame.display.set_mode(windowSize)
 rect = pygame.Rect(origin, windowSize)
 image = pygame.Surface(windowSize)
@@ -49,7 +49,7 @@ imagesVent = [load_image(PATH + "vent1.png"), load_image(PATH + "vent2.png"), lo
 # except:
 #     print('nani')
 # imagesVent = [load_image(PATH + "wind-sens-1.png"), load_image(PATH + "wind-sens-2.png"), load_image(PATH + "wind-sens-1.png")]
-
+#imagesVent = [load_image(PATH + "wind1.png"), load_image(PATH + "wind2.png"), load_image(PATH + "wind3.png"), load_image(PATH + "wind4.png")]
 movingBackground = MovingBackground(imagesVent)
 obstacle2 = movingBackground.generateObstacles()
 game.all_sprites.add(obstacle2)
@@ -85,7 +85,7 @@ def gameOver():
 
 
     screen = pygame.display.set_mode(windowSize)
-    pygame.display.set_caption('GameOver TARBANAK')
+    pygame.display.set_caption('Bubble Escape')
     textMort = Texty.render('Game Over ', 0, (0, 0, 255))
     textHighscore = TextChiffre.render("Highscore : "+str(highscore),0,(255,0,0))
 

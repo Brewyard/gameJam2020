@@ -29,19 +29,18 @@ background_anime = BackgroundAnime(imagesBackground)
 spriteGroup = pygame.sprite.Group(background_anime)
 clock = pygame.time.Clock()
 
-f = open('../highscore.txt', 'r')
-highscore = int(f.read())
-f.close()
 
 def drawMenu():
+    f = open('../highscore.txt', 'r')
+    highscore = int(f.read())
+    f.close()
     dt = clock.tick(60) / 1000
     #Generer la fenetre de notre jeu
     windowSize = (800, 600)
     origin = (0,0)
-    global highscore
     global selectorMenu
     placement = 200
-    pygame.display.set_caption('Le Menu')
+    pygame.display.set_caption('Bubble Escape')
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin,windowSize)
     image = pygame.Surface(windowSize)
@@ -77,16 +76,16 @@ def draw_levels():
     global selectorLevels
     windowSize = (800, 600)
     origin = (0, 0)
-    pygame.display.set_caption('Les Niveaux')
+    pygame.display.set_caption('Levels')
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin, windowSize)
     image = pygame.Surface(windowSize)
     # imagesBackground
-    textLevelFacile = Texty.render('Facile ', 0, (0, 153, 255))
-    textLevelNormal = Texty.render('Normal', 0, (0, 153, 255))
+    textLevelFacile = Texty.render('Easy ', 0, (0, 153, 255))
+    textLevelNormal = Texty.render('Medium', 0, (0, 153, 255))
     textLevelPro = Texty.render('Pro', 0, (0, 153, 255))
-    textLevelExpert = Texty.render('Expert', 0, (0, 153, 255))
-    textLevelRetour= Texty.render('Retour', 0, (58, 52, 235))
+    textLevelExpert = Texty.render('Nightmare', 0, (0, 153, 255))
+    textLevelRetour= Texty.render('Back', 0, (58, 52, 235))
 
     imageFleche = pygame.image.load("../Images/bubble.png")
     imageFleche = pygame.transform.scale(imageFleche, (30, 30))

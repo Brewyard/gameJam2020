@@ -5,13 +5,13 @@ pygame.init()
 pygame.display.set_caption('End credits')
 screen = pygame.display.set_mode((800, 600))
 screen_r = screen.get_rect()
-font = pygame.font.Font("../Fonts/Polo Bubble.ttf", 40)
+font = pygame.font.Font("../Fonts/Polo Bubble.ttf", 45)
 clock = pygame.time.Clock()
 
 def drawCredits():
 
     credit_list = ["     GameJam IUT2 2020"," ","Bubble Escape"," "," ","Julien - Graphiste",
-                   " ","Victor - Graphiste"," ", "Theo - Developpeur"," ", "Teo - Developpeur et Sound Designer", "" , "Christopher - Game Director", "",
+                   " ","Victor - Graphiste et Animateur"," ", "Theo - Developpeur"," ", "Teo - Developpeur et Sound Designer", "" , "Christopher - Game Director", "",
                    "Technologie : Python 3", "", "Librairies : PyGame", "", "Outils : PyCharm, Git, Gimp"]
 
     texts = []
