@@ -6,6 +6,8 @@ from main import gameOver
 
 pygame.init()
 Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 50)
+TextChiffre = pygame.font.SysFont('arial', 20)
+
 selector = 1
 placement = 200
 game = Game()
@@ -18,15 +20,21 @@ f = open('../highscore.txt', 'r')
 highscore = int(f.read())
 f.close()
 
+
+
+
+
 def drawMenu():
+
     #Generer la fenetre de notre jeu
     windowSize = (800, 600)
     origin = (0,0)
+    screen = pygame.display.set_mode(windowSize)
     global highscore
     global selectorMenu
     placement = 200
     pygame.display.set_caption('Le Menu')
-    screen = pygame.display.set_mode(windowSize)
+
     rect = pygame.Rect(origin,windowSize)
     image = pygame.Surface(windowSize)
 #    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
@@ -34,7 +42,7 @@ def drawMenu():
     textStart = Texty.render('Start', 0, (52, 219, 235))
     textCredits = Texty.render('Credits', 0, (52, 219, 235))
     textQuit = Texty.render('Quit ', 0, (255, 0, 0))
-    textHighscore = Texty.render("Highscore : "+str(highscore),0,(52, 159, 235))
+    textHighscore = TextChiffre.render("Highscore : "+str(highscore),0,(52, 159, 235))
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
     screen.blit(textTitre, (300, 150))
@@ -50,6 +58,7 @@ def drawMenu():
         placement = 300
     screen.blit(imageFleche,(260, placement))
     pygame.display.update()
+
 
 
 
@@ -95,6 +104,7 @@ def draw_levels():
 
 
 music_Menu.play(-1)
+
 run = True
 while run:
     for event in pygame.event.get(): ########boucle du menu
@@ -132,6 +142,7 @@ while run:
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
+
                                     break
                             #  ici direction draw_levels
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
@@ -140,6 +151,7 @@ while run:
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
+
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 music_Menu.stop()
@@ -147,6 +159,7 @@ while run:
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
+                                    inpt()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 music_Menu.stop()
@@ -154,6 +167,7 @@ while run:
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
+                                    inpt()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 5:
                                 music_Menu.stop()

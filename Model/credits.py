@@ -12,7 +12,7 @@ def drawCredits():
 
     credit_list = ["     GameJam IUT2 2020"," ","Bubble Escape"," "," ","Julien - Graphiste",
                    " ","Victor - Graphiste"," ", "Theo - Developpeur"," ", "Teo - Developpeur et Sound Designer", "" , "Christopher - Game Director", "",
-                   "Technologie : Python 3", "", "Librairies : PyGame", "", "Outils : PyCharm, Git, Gimp"]
+                   "Technologie : Python 3", "", "Librairie : PyGame", "", "Outils : PyCharm, Git, Gimp"]
 
     texts = []
     # we render the text once, since it's easier to work with surfaces

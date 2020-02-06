@@ -8,8 +8,6 @@ from bird import Bird
 import random
 
 
-selector = 1
-placement = 200
 class Game():
     def __init__(self):
         imagesBulle = [load_image(PATH + "bubble.png"), load_image(PATH + "bubble75horizon.png"), load_image(PATH + "bubble50horizon.png"),
@@ -43,6 +41,13 @@ class Game():
         self.imagesBird.append([scale_image(load_image(PATH + "bird_robin_1.png"), 50, 50), scale_image(load_image(PATH + "bird_robin_2.png"), 50, 50),
                                 scale_image(load_image(PATH + "bird_robin_3.png"), 50, 50)])
         self.birds = []
+
+
+    def resetGame(self):
+        self.imagesBird.clear()
+        self.vitesseAcceleration = 0
+        self.vitesseBullePercee = 0
+        self.birds.clear()
 
 
     def addBoost(self):
