@@ -145,7 +145,6 @@ while run:
                                                     print("je vais au menu des niveaux")
                                                     break
                                                 drawMenu()
-                                                pygame.display.update()
                                             if quitter2:
                                                 quitter2 = False
                                                 break
