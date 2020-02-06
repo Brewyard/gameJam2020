@@ -3,7 +3,10 @@ pygame.init()
 import math
 from game import Game
 from movingbackground import MovingBackground
+from bird import Bird
 from obstacle import Obstacle
+from player import Player
+
 selectorGameOver = 1
 placement = 300
 from utils_game import load_image
@@ -47,6 +50,8 @@ obstacle2 = movingBackground.generateObstacles()
 game.all_sprites.add(obstacle2)
 
 
+
+
 # game.menu(screen)
 score = 0
 def gameOver():
@@ -77,11 +82,8 @@ def gameOver():
 
     screen = pygame.display.set_mode(windowSize)
     pygame.display.set_caption('GameOver TARBANAK')
-
     textMort = Texty.render('Game Over ', 0, (0, 0, 255))
     textHighscore = TextChiffre.render("Highscore : "+str(highscore),0,(255,0,0))
-    print(score)
-    print(highscore)
     textScore = TextChiffre.render("Score : "+str(score),0,(255,0,0))
     screen.blit(textMort, (300, 200))
     screen.blit(textHighscore, (50, 50))
@@ -166,6 +168,8 @@ def playing(vitesseAcceleration):
                 # gameover
                 background_music.stop()
                 en_jeu = False
+                game.player.resetPlayer()
+                del game.birds
                 return en_jeu
             # si bird sorti de l'ecran
             if not rect.inflate(200, 200).contains(bird.rect):
@@ -227,6 +231,9 @@ def playing(vitesseAcceleration):
             riendutout = 0
         else:
             background_music.stop()
+            game.player.resetPlayer()
+            game.birds.clear()
+            movingBackground.obstacles.clear()
             en_jeu = False
             return en_jeu
 

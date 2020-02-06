@@ -29,6 +29,12 @@ class Obstacle(pygame.sprite.Sprite):
 
         self.speed = 1
 
+
+
+
+
+
+
     def update_time_dependent(self, dt):
         self.current_time += dt
         if self.current_time >= self.animation_time:

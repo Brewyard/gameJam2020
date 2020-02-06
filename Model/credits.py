@@ -5,19 +5,20 @@ pygame.init()
 pygame.display.set_caption('End credits')
 screen = pygame.display.set_mode((800, 600))
 screen_r = screen.get_rect()
-font = pygame.font.SysFont("Arial", 40)
+font = pygame.font.Font("../Fonts/Polo Bubble.ttf", 40)
 clock = pygame.time.Clock()
 
 def drawCredits():
 
-    credit_list = ["CREDITS - Bubble Escape"," "," "," ","Julien - Graphiste",
-                   " "," ","Victor - Graphiste"," "," ", "Theo - Developpeur"," ", "Teo - Developpeur", "" , "Christopher - Game Director"]
+    credit_list = ["     GameJam IUT2 2020"," ","Bubble Escape"," "," ","Julien - Graphiste",
+                   " ","Victor - Graphiste"," ", "Theo - Developpeur"," ", "Teo - Developpeur et Sound Designer", "" , "Christopher - Game Director", "",
+                   "Technologie : Python 3", "", "Librairies : PyGame", "", "Outils : PyCharm, Git, Gimp"]
 
     texts = []
     # we render the text once, since it's easier to work with surfaces
     # also, font rendering is a performance killer
     for i, line in enumerate(credit_list):
-        s = font.render(line, 1, (10, 10, 10))
+        s = font.render(line, 0, (52, 219, 235))
         # we also create a Rect for each Surface.
         # whenever you use rects with surfaces, it may be a good idea to use sprites instead
         # we give each rect the correct starting position
