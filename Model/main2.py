@@ -131,26 +131,8 @@ while run:
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
-                                    jattend = True
-                                    quitter2 = False
-                                    print("dans le menu game over")
-                                    while jattend: ##on attend un evenement pour retourner a la fenetre des niveaux
-                                        for x in pygame.event.get():
-                                            if x.type == pygame.QUIT:
-                                                pygame.quit()
-                                                exit()
-                                            elif x.type == pygame.KEYDOWN:
-                                                if x.key == pygame.K_RETURN:
-                                                    quitter2 = True
-                                                    print("je vais au menu des niveaux")
-                                                    break
-                                                drawMenu()
-                                            if quitter2:
-                                                quitter2 = False
-                                                break
-                                            draw_levels()
-                                          #  ici direction draw_levels
-
+                                    break
+                                         #  ici direction draw_levels
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
                                 music_Menu.stop()
                                 vitesse= 1
