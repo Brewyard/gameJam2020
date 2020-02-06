@@ -88,6 +88,7 @@ def gameOver():
     pygame.display.set_caption('GameOver TARBANAK')
 
     textMort = Texty.render('Game Over ', 0, (0, 0, 255))
+# <<<<<<< HEAD
     textRetour = Texty.render('Retour ', 0, (0, 0, 255))
     textHighscore = Texty.render("Highscore : " + str(highscore), 0, (255, 0, 0))
     textScore = Texty.render("Score : " + str(score), 0, (255, 0, 0))
@@ -95,14 +96,16 @@ def gameOver():
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche, (30, 30))
     screen.blit(textRetour, (300, 300))
+# =======
+#     textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
+#     textScore = Texty.render("Score : "+str(score),0,(255,0,0))
+# >>>>>>> dbd112a53f160cc0a64012e961121cb47ceed344
     screen.blit(textMort, (300, 200))
     screen.blit(textHighscore, (50, 50))
     screen.blit(textScore, (50, 100))
-
-    if selectorGameOver == 1:
-        placement == 300
-    screen.blit(imageFleche, (260, placement))
     pygame.display.update()
+    time.sleep(5)
+    return
 
 
 # boucle principale

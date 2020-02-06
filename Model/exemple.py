@@ -29,7 +29,12 @@ def load_images():
     #images = [load_image(PATH + "bird_robin_1.png"), load_image(PATH + "bird_robin_2.png"), load_image(PATH + "bird_robin_3.png")]
     #images = [load_image(PATH + "bubbles_group_1.png"), load_image(PATH + "bubbles_group_2.png"), load_image(PATH + "bubbles_group_3.png"),
     #          load_image(PATH + "bubbles_group_4.png"), load_image(PATH + "bubbles_group_5.png")]
-    images = [load_image(PATH + "wind-sens-1.png"), load_image(PATH + "wind-sens-2.png"), load_image(PATH + "wind-sens-3.png")]
+    #images = [load_image(PATH + "wind-sens-1.png"), load_image(PATH + "wind-sens-2.png"), load_image(PATH + "wind-sens-3.png")]
+    images = [load_image(PATH + "frame_00.png"), load_image(PATH + "frame_01.png"), load_image(PATH + "frame_02.png"),
+              load_image(PATH + "frame_03.png"), load_image(PATH + "frame_04.png"), load_image(PATH + "frame_05.png"),
+              load_image(PATH + "frame_06.png"), load_image(PATH + "frame_07.png"), load_image(PATH + "frame_08.png"),
+              load_image(PATH + "frame_09.png"), load_image(PATH + "frame_10.png"), load_image(PATH + "frame_11.png"),
+              load_image(PATH + "frame_12.png"), load_image(PATH + "frame_13.png"), load_image(PATH + "frame_14.png")]
     return images
 
 
@@ -49,7 +54,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 
         self.velocity = pygame.math.Vector2(0, 0)
 
-        self.animation_time = 0.15
+        self.animation_time = 0.12
         self.current_time = 0
 
         self.animation_frames = 6
