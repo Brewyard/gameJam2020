@@ -50,8 +50,9 @@ game.all_sprites.add(obstacle2)
 # game.menu(screen)
 score = 0
 def gameOver():
-    Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
-    Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
+    Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 20)
+    TextChiffre = pygame.font.SysFont('arial', 20)
+
     global score,placement,selectorGameOver
     global windowSize,origin,screen
     placement = 300
@@ -75,14 +76,13 @@ def gameOver():
 
 
     screen = pygame.display.set_mode(windowSize)
-    rect = pygame.Rect(origin, windowSize)
-    image = pygame.Surface(windowSize)
-    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
     pygame.display.set_caption('GameOver TARBANAK')
 
     textMort = Texty.render('Game Over ', 0, (0, 0, 255))
-    textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
-    textScore = Texty.render("Score : "+str(score),0,(255,0,0))
+    textHighscore = TextChiffre.render("Highscore : "+str(highscore),0,(255,0,0))
+    print(score)
+    print(highscore)
+    textScore = TextChiffre.render("Score : "+str(score),0,(255,0,0))
     screen.blit(textMort, (300, 200))
     screen.blit(textHighscore, (50, 50))
     screen.blit(textScore, (50, 100))
