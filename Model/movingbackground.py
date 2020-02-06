@@ -31,6 +31,6 @@ class MovingBackground():  # avec un sprite après
         for obstacle in self.obstacles:
             if obstacle.windTouch2(target):
                 touch = True
-                self.windForce = obstacle.longueurVent/20
+                self.windForce = obstacle.longueurVent/10
                 self.windDirection = obstacle.angle
         return touch

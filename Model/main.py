@@ -145,7 +145,6 @@ def inpt():
                     word+=chr(event.key)
                 if event.key == pygame.K_RETURN:
                     done=False
-                print(word)
     return word
 
 def gameOver():
@@ -210,9 +209,6 @@ def playing(difficulte):
     compteToursGlobalPourAcceleration = 0
     vitesseBoostEtOiseauEnPlus = 0
 
-    print(game.frequenceVent)
-    print(game.frequenceBoost)
-    print(game.frequenceBirds)
 
     en_jeu = False
     while launch:
@@ -284,7 +280,7 @@ def playing(difficulte):
                 game.all_sprites.remove(bird)
 
         # deplacement de la bulle(player) avec collision aux murs
-        if souffle and secondesDeSouffle < 1:  # il ne peut pas se deplacer le temps du souffle
+        if souffle and secondesDeSouffle < 0.2:  # il ne peut pas se deplacer le temps du souffle
             coordonnees = math.radians(movingBackground.windDirection)
             sin = math.sin(coordonnees)
             cos = math.cos(coordonnees)
@@ -361,7 +357,7 @@ def playing(difficulte):
         compteToursBird += 1
 
         if souffle:
-            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 500
+            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000
 
         if movingBackground.obstacles:
             if rect.contains(movingBackground.obstacles[0]):
@@ -373,8 +369,6 @@ def playing(difficulte):
         game.player.velocityY = 0
 
         compteToursGlobalPourAcceleration += 1
-        print(compteToursGlobalPourAcceleration)
-
         if compteToursGlobalPourAcceleration == 8000:
             compteToursGlobalPourAcceleration = 0
             vitesseBoostEtOiseauEnPlus += 1
