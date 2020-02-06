@@ -27,8 +27,9 @@ def load_images():
     #images = [load_image(PATH + "bird_blue_1.png"), load_image(PATH + "bird_blue_2.png"), load_image(PATH + "bird_blue_3.png")]
     #images = [load_image(PATH + "bird_brown_1.png"), load_image(PATH + "bird_brown_2.png"), load_image(PATH + "bird_brown_3.png")]
     #images = [load_image(PATH + "bird_robin_1.png"), load_image(PATH + "bird_robin_2.png"), load_image(PATH + "bird_robin_3.png")]
-    images = [load_image(PATH + "bubbles_group_1.png"), load_image(PATH + "bubbles_group_2.png"), load_image(PATH + "bubbles_group_3.png"),
-              load_image(PATH + "bubbles_group_4.png"), load_image(PATH + "bubbles_group_5.png")]
+    #images = [load_image(PATH + "bubbles_group_1.png"), load_image(PATH + "bubbles_group_2.png"), load_image(PATH + "bubbles_group_3.png"),
+    #          load_image(PATH + "bubbles_group_4.png"), load_image(PATH + "bubbles_group_5.png")]
+    images = [load_image(PATH + "wind-sens-1.png"), load_image(PATH + "wind-sens-2.png"), load_image(PATH + "wind-sens-3.png")]
     return images
 
 
