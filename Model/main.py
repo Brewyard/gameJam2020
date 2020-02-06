@@ -96,8 +96,10 @@ def gameOver():
 # boucle principale
 def playing(vitesseAcceleration):
     game.vitesseAcceleration = vitesseAcceleration
-    intervalleAleatoire = random.randint(1, 100)
-    compteTours = 0
+    intervalleAleatoire1 = random.randint(1, 100)
+    compteTours1 = 0
+    intervalleAleatoire2 = random.randint(1, 1000)
+    compteTours2 = 0
     souffle = False
     secondesDeSouffle = 0
     debut_souffle = pygame.time.get_ticks()
@@ -111,11 +113,18 @@ def playing(vitesseAcceleration):
         screen.blit(imageJeu, rect)
         # creation obstacles
         # intervalle random de temps pour la generation d'obstacle
-        if compteTours == intervalleAleatoire:
+        if compteTours1 == intervalleAleatoire1:
             obstacle1 = movingBackground.generateObstacles()
-            compteTours = 0
-            intervalleAleatoire = random.randint(1, 100)
+            compteTours1 = 0
+            intervalleAleatoire1 = random.randint(1, 100)
             game.all_sprites.add(obstacle1)
+
+        # intervalle random de temps pour la generation de boost
+        if compteTours2 == intervalleAleatoire2:
+            boost = game.addBoost()
+            compteTours2 = 0
+            intervalleAleatoire2 = random.randint(1, 1000)
+            game.all_sprites.add(boost)
 
         movingBackground.fall(game.vitesseAcceleration + game.vitesseBullePercee)
         # for obstacle in movingBackground.obstacles:
@@ -128,6 +137,18 @@ def playing(vitesseAcceleration):
             souffle = True
             debut_souffle = pygame.time.get_ticks()
             secondesDeSouffle = 0
+
+        # si bulle touche boost
+        for boost in game.boosts:
+            if boost.touch(game.player.rect):
+                #  gonfler la bulle et delete le boost
+                game.player.retrecirOuAgrandir(game.player.width + 10, game.player.height + 10)
+                game.boosts.remove(boost)
+                game.all_sprites.remove(boost)
+            # si boost sorti de l'ecran
+            if not rect.inflate(200, 200).contains(boost.rect):
+                game.boosts.remove(boost)
+                game.all_sprites.remove(boost)
 
         # deplacement de la bulle(player) avec collision aux murs
         if souffle and secondesDeSouffle < 1:  # il ne peut pas se deplacer le temps du souffle
@@ -172,9 +193,6 @@ def playing(vitesseAcceleration):
 
                 #drawMenu()
 
-
-
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -188,7 +206,8 @@ def playing(vitesseAcceleration):
         # screen.blit(game.player.image, game.player.rect)
         game.all_sprites.draw(screen)
         pygame.display.update()
-        compteTours += 1
+        compteTours1 += 1
+        compteTours2 += 1
 
         if souffle:
             secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000
