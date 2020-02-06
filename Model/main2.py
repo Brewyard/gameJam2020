@@ -5,8 +5,7 @@ from game import Game
 from main import gameOver
 
 pygame.init()
-Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
-Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
+Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 50)
 selector = 1
 placement = 200
 game = Game()
@@ -31,11 +30,11 @@ def drawMenu():
     rect = pygame.Rect(origin,windowSize)
     image = pygame.Surface(windowSize)
     imageJeu = pygame.image.load("../Images/background_Menu.jpg")
-    textTitre = Texty.render('Bubble Escape ', 0, (255, 0, 0))
-    textStart = Texty.render('Start', 0, (255, 0, 0))
-    textCredits = Texty.render('Credits', 0, (255, 0, 0))
+    textTitre = Texty.render('Bubble Escape ', 0, (52, 219, 235))
+    textStart = Texty.render('Start', 0, (52, 219, 235))
+    textCredits = Texty.render('Credits', 0, (52, 219, 235))
     textQuit = Texty.render('Quit ', 0, (255, 0, 0))
-    textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
+    textHighscore = Texty.render("Highscore : "+str(highscore),0,(52, 159, 235))
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
     screen.blit(textTitre, (300, 150))
@@ -55,8 +54,7 @@ def drawMenu():
 
 
 def draw_levels():
-    Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
-    Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
+    Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 50)
     placement = 200
     global selectorLevels
     windowSize = (800, 600)
@@ -66,11 +64,11 @@ def draw_levels():
     rect = pygame.Rect(origin, windowSize)
     image = pygame.Surface(windowSize)
     imageJeu = pygame.image.load("../Images/background_Menu.jpg")
-    textLevelFacile = Texty.render('Facile ', 0, (255, 0, 0))
-    textLevelNormal = Texty.render('Normal', 0, (255, 0, 0))
-    textLevelPro = Texty.render('Pro', 0, (255, 0, 0))
-    textLevelExpert = Texty.render('Expert', 0, (255, 0, 0))
-    textLevelRetour= Texty.render('Retour', 0, (0, 255, 0))
+    textLevelFacile = Texty.render('Facile ', 0, (52, 219, 235))
+    textLevelNormal = Texty.render('Normal', 0, (52, 219, 235))
+    textLevelPro = Texty.render('Pro', 0, (52, 219, 235))
+    textLevelExpert = Texty.render('Expert', 0, (52, 219, 235))
+    textLevelRetour= Texty.render('Retour', 0, (58, 52, 235))
 
     imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
     imageFleche = pygame.transform.scale(imageFleche, (30, 30))

@@ -8,11 +8,6 @@ from bird import Bird
 import random
 
 
-Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
-Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
-
-
-
 selector = 1
 placement = 200
 class Game():
