@@ -103,6 +103,11 @@ class Player(pygame.sprite.Sprite):
             for image in self.images:
                 imagesScaled.append(scale_image(image, width, height))
             self.images = imagesScaled
+
+            imagesBoostScaled = []
+            for image in self.imagesBoost:
+                imagesBoostScaled.append(scale_image(image, width, height))
+            self.imagesBoost = imagesBoostScaled
             # sauvegarde x et y
             sauvX = self.rect.x
             sauvY = self.rect.y
