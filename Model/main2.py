@@ -12,6 +12,7 @@ game = Game()
 selectorLevels = 1
 selectorMenu = 1
 music_Menu = pygame.mixer.Sound('../Sounds/Otarie.wav')
+music_bouton = pygame.mixer.Sound('../Sounds/bouton.wav')
 
 f = open('../highscore.txt', 'r')
 highscore = int(f.read())
@@ -28,7 +29,7 @@ def drawMenu():
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin,windowSize)
     image = pygame.Surface(windowSize)
-    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
+#    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
     textTitre = Texty.render('Bubble Escape ', 0, (52, 219, 235))
     textStart = Texty.render('Start', 0, (52, 219, 235))
     textCredits = Texty.render('Credits', 0, (52, 219, 235))
@@ -62,7 +63,7 @@ def draw_levels():
     screen = pygame.display.set_mode(windowSize)
     rect = pygame.Rect(origin, windowSize)
     image = pygame.Surface(windowSize)
-    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
+#    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
     textLevelFacile = Texty.render('Facile ', 0, (52, 219, 235))
     textLevelNormal = Texty.render('Normal', 0, (52, 219, 235))
     textLevelPro = Texty.render('Pro', 0, (52, 219, 235))
@@ -103,9 +104,11 @@ while run:
             exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
+                music_bouton.play()
                 if selectorMenu != 1:
                     selectorMenu -= 1
             elif event.key == pygame.K_DOWN:
+                music_bouton.play()
                 if selectorMenu != 3:
                     selectorMenu += 1
             elif event.key == pygame.K_RETURN and selectorMenu == 1: #####On choisit de jouer => levels
@@ -130,7 +133,7 @@ while run:
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
-                                         #  ici direction draw_levels
+                            #  ici direction draw_levels
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
                                 music_Menu.stop()
                                 vitesse= 1
@@ -140,14 +143,14 @@ while run:
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 music_Menu.stop()
-                                vitesse = 1.5
+                                vitesse = 2
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 music_Menu.stop()
-                                vitesse = 2
+                                vitesse = 4
                                 res = playing(vitesse)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()

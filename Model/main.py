@@ -57,10 +57,11 @@ score = 0
 
 
 def gameOver():
-    Texty = pygame.font.Font('../Images/SUPERPOI_R.TTF', 20)
-    Textyy = pygame.font.Font('../Images/SUPERPOI_R.TTF', 10)
-    global score, placement, selectorGameOver
-    global windowSize, origin, screen
+    Texty = pygame.font.Font('../Fonts/Polo Bubble.ttf', 20)
+    TextChiffre = pygame.font.SysFont('arial', 20)
+
+    global score,placement,selectorGameOver
+    global windowSize,origin,screen
     placement = 300
     selectorGameOver = 1
     # pb : fait le son en double si on meurt alors son pop et image disparait
@@ -74,37 +75,25 @@ def gameOver():
         f = open('../highscore.txt', 'w')
         f.write(str(score))
         f.close()
-
     f = open('../highscore.txt', 'r')
     highscore = int(f.read())
     f.close()
     windowSize = (800, 600)
     origin = (0, 0)
 
+
     screen = pygame.display.set_mode(windowSize)
-    rect = pygame.Rect(origin, windowSize)
-    image = pygame.Surface(windowSize)
-    imageJeu = pygame.image.load("../Images/background_Menu.jpg")
     pygame.display.set_caption('GameOver TARBANAK')
 
     textMort = Texty.render('Game Over ', 0, (0, 0, 255))
-# <<<<<<< HEAD
-    textRetour = Texty.render('Retour ', 0, (0, 0, 255))
-    textHighscore = Texty.render("Highscore : " + str(highscore), 0, (255, 0, 0))
-    textScore = Texty.render("Score : " + str(score), 0, (255, 0, 0))
+    textHighscore = TextChiffre.render("Highscore : "+str(highscore),0,(255,0,0))
 
-    imageFleche = pygame.image.load("../Images/fleche_rouge.jpg")
-    imageFleche = pygame.transform.scale(imageFleche, (30, 30))
-    screen.blit(textRetour, (300, 300))
-# =======
-#     textHighscore = Texty.render("Highscore : "+str(highscore),0,(255,0,0))
-#     textScore = Texty.render("Score : "+str(score),0,(255,0,0))
-# >>>>>>> dbd112a53f160cc0a64012e961121cb47ceed344
+    textScore = TextChiffre.render("Score : "+str(score),0,(255,0,0))
     screen.blit(textMort, (300, 200))
     screen.blit(textHighscore, (50, 50))
     screen.blit(textScore, (50, 100))
     pygame.display.update()
-    time.sleep(5)
+    time.sleep(5) #au bout de 5 seconde on revient au menus du choix des niveaux
     return
 
 
@@ -120,7 +109,7 @@ def playing(vitesseAcceleration):
     souffle = False
     secondesDeSouffle = 0
     debut_souffle = pygame.time.get_ticks()
-    background_music.play()
+    background_music.play(-1)
 
     en_jeu = False
     while launch:
@@ -168,15 +157,14 @@ def playing(vitesseAcceleration):
         # si bulle touche boost
         for boost in game.boosts:
             if boost.touch(game.player.rect):
-                print('ca touche mamene')
                 #  gonfler la bulle et delete le boost
                 game.player.retrecirOuAgrandir(game.player.width + 15, game.player.height + 15)
                 game.boosts.remove(boost)
-                # game.all_sprites.remove(boost)
+                game.all_sprites.remove(boost)
             # si boost sorti de l'ecran
             if not rect.inflate(200, 200).contains(boost.rect):
                 game.boosts.remove(boost)
-                # game.all_sprites.remove(boost)
+                game.all_sprites.remove(boost)
 
         # si bulle touche boost
         for bird in game.birds:
@@ -187,7 +175,7 @@ def playing(vitesseAcceleration):
                 return en_jeu
             # si bird sorti de l'ecran
             if not rect.inflate(200, 200).contains(bird.rect):
-                game.boosts.remove(bird)
+                game.birds.remove(bird)
                 game.all_sprites.remove(bird)
 
         # deplacement de la bulle(player) avec collision aux murs
@@ -268,7 +256,7 @@ def playing(vitesseAcceleration):
         compteTours3 += 1
 
         if souffle:
-            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 1000
+            secondesDeSouffle = (pygame.time.get_ticks() - debut_souffle) / 500
 
         if movingBackground.obstacles:
             if rect.contains(movingBackground.obstacles[0]):

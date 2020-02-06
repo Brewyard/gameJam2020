@@ -10,7 +10,8 @@ clock = pygame.time.Clock()
 
 def drawCredits():
 
-    credit_list = ["CREDITS - Notre Jeu"," "," "," ","Julien - Le Quebecophobe"," "," ","Victor - Le Meilleur"," "," ", "Theo - Le Salafiste"," "," ", "Teo - L'expert Python", "", "" , "Christopher - Game Designer"]
+    credit_list = ["CREDITS - Bubble Escape"," "," "," ","Julien - Graphiste",
+                   " "," ","Victor - Graphiste"," "," ", "Theo - Developpeur"," ", "Teo - Developpeur", "" , "Christopher - Game Director"]
 
     texts = []
     # we render the text once, since it's easier to work with surfaces
