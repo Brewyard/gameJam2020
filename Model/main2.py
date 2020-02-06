@@ -94,7 +94,7 @@ def draw_levels():
 
 
 
-music_Menu.play()
+music_Menu.play(-1)
 run = True
 while run:
     for event in pygame.event.get(): ########boucle du menu

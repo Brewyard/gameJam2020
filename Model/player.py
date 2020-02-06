@@ -23,6 +23,24 @@ class Player(pygame.sprite.Sprite):
         self.width = self.rect.width
         self.height = self.rect.height
 
+
+    def resetPlayer(self):
+        size = (100, 100)
+        self.rect = pygame.Rect((300, 300), size)
+        self.index = 0
+        self.velocityX = 0
+        self.velocityY = 0
+
+        self.animation_time = 0.02
+        self.current_time = 0
+
+        self.animation_frames = 6
+        self.current_frame = 0
+
+        self.boost = 20
+        self.width = self.rect.width
+        self.height = self.rect.height
+
     def update_time_dependent(self, dt):
         self.current_time += dt
         if self.current_time >= self.animation_time:
