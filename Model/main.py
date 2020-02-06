@@ -70,18 +70,18 @@ imagesVent = [load_image(PATH + "vent1.png"), load_image(PATH + "vent2.png"), lo
 score = 0
 
 
-def text1(word, x, y, sizeFont):
+def text1(word, x, y, sizeFont, r, v, b):
     # Generer la fenetre de notre jeu
     # screen = pygame.display.set_mode(windowSize)
     font = pygame.font.Font('../Fonts/gumbonormal.ttf', sizeFont)
-    text = font.render("{}".format(word), True, (0, 153, 255))
+    text = font.render("{}".format(word), True, (r, v, b))
     return screen.blit(text, (x, y))
 
 
 def inpt():
     screen.fill((0, 0, 0))
     word = ""
-    text1("Please enter your name: ", 100, 200, 40)  # example asking name
+    text1("Please enter your name: ", 100, 200, 40, 0, 153, 255)  # example asking name
     pygame.display.flip()
     done = True
     while done:
@@ -144,8 +144,8 @@ def inpt():
                     word += chr(event.key)
                 if event.key == pygame.K_RETURN:
                     done = False
-                text1("Please enter your name: ", 100, 200, 40)
-                text1(word, 300, 400, 20)
+                text1("Please enter your name: ", 100, 200, 40, 0, 153, 255)
+                text1(word, 300, 400, 20, 0, 153, 255)
                 pygame.display.flip()
     return word
 
@@ -355,7 +355,7 @@ def playing(difficulte):
         game.all_sprites.update(dt)
         # screen.blit(game.player.image, game.player.rect)
         game.all_sprites.draw(screen)
-        pygame.display.update()
+        pygame.display.flip()
         compteToursVent += 1
         compteToursBoost += 1
         compteToursBird += 1
@@ -376,3 +376,17 @@ def playing(difficulte):
         if compteToursGlobalPourAcceleration == 8000:
             compteToursGlobalPourAcceleration = 0
             vitesseBoostEtOiseauEnPlus += 1
+
+        # si appuie sur entree ==> pause
+        if game.pressed.get(pygame.K_RETURN):
+            text1('PAUSE', 200, 200, 90, 120, 120, 120)
+            pygame.display.flip()
+            reprendre = False
+            while not reprendre:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        exit()
+                    elif event.type == pygame.KEYDOWN:
+                        reprendre = True
+                        game.pressed[pygame.K_RETURN] = False
