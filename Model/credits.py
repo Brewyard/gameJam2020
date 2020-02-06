@@ -1,12 +1,22 @@
 import pygame
 from pygame.locals import *
+from background_anime import BackgroundAnime
+from utils_game import load_image
+from utils_game import PATH
 
 pygame.init()
 pygame.display.set_caption('End credits')
 screen = pygame.display.set_mode((800, 600))
 screen_r = screen.get_rect()
-font = pygame.font.Font("../Fonts/Polo Bubble.ttf", 40)
+font = pygame.font.Font("../Fonts/gumbonormal.ttf", 40)
 clock = pygame.time.Clock()
+imagesBackground = [load_image(PATH + "frame_00.png"), load_image(PATH + "frame_01.png"), load_image(PATH + "frame_02.png"),
+                    load_image(PATH + "frame_03.png"), load_image(PATH + "frame_04.png"), load_image(PATH + "frame_05.png"),
+                    load_image(PATH + "frame_06.png"), load_image(PATH + "frame_07.png"), load_image(PATH + "frame_08.png"),
+                    load_image(PATH + "frame_09.png"), load_image(PATH + "frame_10.png"), load_image(PATH + "frame_11.png"),
+                    load_image(PATH + "frame_12.png"), load_image(PATH + "frame_13.png"), load_image(PATH + "frame_14.png")]
+background_anime = BackgroundAnime(imagesBackground)
+spriteGroup = pygame.sprite.Group(background_anime)
 
 def drawCredits():
 
@@ -26,11 +36,17 @@ def drawCredits():
         texts.append((r, s))
 
     while True:
+        dt = clock.tick(60) / 1000
+
+        spriteGroup.update(dt)
+        spriteGroup.draw(screen)
+
         for e in pygame.event.get():
             if e.type == QUIT or e.type == KEYDOWN and e.key == pygame.K_ESCAPE:
                 return
 
-        screen.fill((255, 255, 255))
+
+        # screen.fill((255, 255, 255))
 
         for r, s in texts:
             # now we just move each rect by one pixel each frame
