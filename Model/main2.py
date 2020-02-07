@@ -1,5 +1,6 @@
 import pygame
 from credits import drawCredits
+from credits import drawExplication
 from main import playing
 from game import Game
 from main import gameOver
@@ -14,6 +15,8 @@ pygame.init()
 
 
 Texty = pygame.font.Font('../Fonts/gumbonormal.ttf', 40)
+Texty2 = pygame.font.Font('../Fonts/gumbonormal.ttf', 20)
+
 TextyGrand = pygame.font.Font('../Fonts/gumbonormal.ttf', 80)
 
 selector = 1
@@ -35,6 +38,14 @@ clock = pygame.time.Clock()
 
 if os.stat("../highscore.txt").st_size == 0:
     f = open('../highscore.txt','w')
+    f.write('2')
+    f.close()
+if os.stat("../highscore2.txt").st_size == 0:
+    f = open('../highscore2.txt','w')
+    f.write('1')
+    f.close()
+if os.stat("../highscore3.txt").st_size == 0:
+    f = open('../highscore3.txt','w')
     f.write('0')
     f.close()
 
@@ -45,9 +56,28 @@ def drawMenu():
     name = f.read()
     f.close()
 
+    f2 = open('../name2.txt', 'r')
+    name2 = f2.read()
+    f2.close()
+
+    f3 = open('../name3.txt', 'r')
+    name3 = f3.read()
+    f3.close()
+
     f = open('../highscore.txt', 'r')
     highscore = int(f.read())
     f.close()
+
+    f2 = open('../highscore2.txt', 'r')
+    highscore2 = int(f2.read())
+    f2.close()
+
+    f3 = open('../highscore3.txt', 'r')
+    highscore3 = int(f3.read())
+    f3.close()
+
+
+
     dt = clock.tick(60) / 1000
     #Generer la fenetre de notre jeu
     windowSize = (800, 600)
@@ -61,9 +91,16 @@ def drawMenu():
     textTitre = TextyGrand.render('Bubble Escape ', 0, (0, 102, 204))
     textStart = Texty.render('Start', 0, (0, 153, 255))
     textCredits = Texty.render('Credits', 0, (0, 153, 255))
+    textExplication = Texty.render('Explication', 0, (0, 153, 255))
     textQuit = Texty.render('Quit ', 0, (255, 0, 0))
     textName = Texty.render(name,0,(0, 153, 255))
+    textNameDeuxieme = Texty2.render(name2,0,(0, 153, 255))
+    textNameTroisieme = Texty2.render(name3,0,(0, 153, 255))
     textHighscore = Texty.render("Highscore : "+str(highscore),0,(0, 153, 255))
+    textDeuxiemeHighScore = Texty2.render("2eme : "+str(highscore2),0,(0, 153, 255))
+    textTroisiemeHighscore = Texty2.render("3eme : "+str(highscore3),0,(0, 153, 255))
+
+
     imageFleche = pygame.image.load("../Images/bubble.png")
     imageFleche = pygame.transform.scale(imageFleche,(30,30))
     spriteGroup.update(dt)
@@ -72,14 +109,24 @@ def drawMenu():
     screen.blit(textTitre, (40, 110))
     screen.blit(textStart, (300, 300))
     screen.blit(textCredits, (300, 350))
-    screen.blit(textQuit, (300, 400))
+    screen.blit(textExplication, (300, 400))
+    screen.blit(textQuit, (300, 450))
     screen.blit(textHighscore,(20,50))
+
+
+    screen.blit(textNameDeuxieme,(20,350))
+    screen.blit(textDeuxiemeHighScore, (20, 370))
+    screen.blit(textNameTroisieme,(20,450))
+    screen.blit(textTroisiemeHighscore,(20,470))
+
     if selectorMenu == 1:
         placement = 310
     elif selectorMenu == 2:
         placement = 360
     elif selectorMenu == 3:
         placement = 410
+    elif selectorMenu == 4:
+        placement = 460
     screen.blit(imageFleche,(260, placement))
     pygame.display.update()
 
@@ -146,7 +193,7 @@ while run:
                     selectorMenu -= 1
             elif event.key == pygame.K_DOWN:
                 music_bouton.play()
-                if selectorMenu != 3:
+                if selectorMenu != 4:
                     selectorMenu += 1
             elif event.key == pygame.K_RETURN and selectorMenu == 1: #####On choisit de jouer => levels
                 truuuue = True
@@ -206,7 +253,9 @@ while run:
 
             elif event.key == pygame.K_RETURN and selectorMenu == 2: #bouton credits
                 drawCredits()
-            elif event.key == pygame.K_RETURN and selectorMenu == 3: #bouton quit
+            elif event.key == pygame.K_RETURN and selectorMenu == 3: #bouton credits
+                drawExplication()
+            elif event.key == pygame.K_RETURN and selectorMenu == 4: #bouton quit
                 pygame.quit()
                 exit()
 

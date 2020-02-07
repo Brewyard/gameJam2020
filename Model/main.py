@@ -164,17 +164,97 @@ def gameOver():
     f = open('../highscore.txt', 'r')
     highscore = int(f.read())
     f.close()
+
+    f2 = open('../highscore2.txt', 'r')
+    highscore2 = int(f2.read())
+    f2.close()
+
+    f3 = open('../highscore3.txt', 'r')
+    highscore3 = int(f3.read())
+    f3.close()
+
+
     if score >= highscore:
-        # demande le nom
+        #echanger highscore2 avec highscore3
+        #recuperer le score de highscore2 et le mettre a la place de highscore3
+        highscore3 = highscore2
+        #recuperer le nom de highscore2 et le mettre a la plce du nom de highscore3
+        #recuperation
+        f2 = open("../name2.txt","r")
+        name2 = f2.read()
+        f2.close()
+        #remplacement
+        f3 = open("../name3.txt","w")
+        f3.write(name2)
+        f3.close()
+        #ecrire la valeur de highscore2 dans highscore3
+        f3 = open("../highscore3.txt","w")
+        f3.write(str(highscore3))
+        f3.close()
+
+        #echanger highscore avec highscore2
+        highscore2 = highscore
+        #recuperer le nom du highscore et le mettre dans le highscore2(name2.txt)
+        f = open("../name.txt","r")
+        name = f.read()
+        f.close()
+        #remplacement pour le highscore2
+        f2 = open("../name2.txt","w")
+        f2.write(name)
+        f2.close()
+        #mettre la valeur de l'ancien highscore dans highscore2
+        f2 = open("../highscore2.txt","w")
+        f2.write(str(highscore2))
+        f2.close()
+
+        # demande le nom a mettre pour le highscore
         nameEntre = inpt()
         f = open('../name.txt', 'w')
         f.write(nameEntre)
         f.close()
-
         highscore = score
         f = open('../highscore.txt', 'w')
         f.write(str(highscore))
         f.close()
+    elif score < highscore and score >= highscore2:
+        #echanger highscore2 avec highscore3 et adieu highscore3
+        highscore3 = highscore2
+        #recuperer le nom de highscore2 pour le mettre a la place de highscore3
+        f2 = open("../name2.txt","r")
+        name2 = f2.read()
+        f2.close()
+        #remplacer dans highscore3
+        f3 = open("../name3.txt","w")
+        f3.write(name2)
+        f3.close()
+        #mettre l'ancienne valeur highscore2 dans le highscore3
+        f3 = open("../highscore3.txt","w")
+        f3.write(str(highscore3))
+        f3.close()
+
+
+        nameEntre = inpt()
+        f2 = open('../name2.txt', 'w')
+        f2.write(nameEntre)
+        f2.close()
+        highscore2 = score
+        f2 = open('../highscore2.txt', 'w')
+        f2.write(str(highscore2))
+        f2.close()
+
+    elif score < highscore2:
+        nameEntre = inpt()
+        f3 = open('../name3.txt', 'w')
+        f3.write(nameEntre)
+        f3.close()
+        highscore3 = score
+        f3 = open('../highscore3.txt', 'w')
+        f3.write(str(highscore3))
+        f3.close()
+
+
+
+
 
     windowSize = (800, 600)
     origin = (0, 0)
@@ -200,6 +280,7 @@ def gameOver():
 
 # boucle principale
 def playing(difficulte):
+    font = pygame.font.Font('../Fonts/gumbonormal.ttf', 20)
     game = Game()
     movingBackground = MovingBackground(imagesVent)
     obstacle2 = movingBackground.generateObstacles()
@@ -224,6 +305,8 @@ def playing(difficulte):
     while launch:
         en_jeu = True
         global score
+        print(score)
+
         clock.tick(60)
         dt = clock.tick(60) / 1000
         # game.menu(screen)
@@ -396,3 +479,6 @@ def playing(difficulte):
                         game.pressed[pygame.K_RETURN] = False
 
         game.player.state = 0 # enleve le boost
+        textScore = font.render("Score : " + str(score), 0, (255, 0, 0))
+        screen.blit(textScore, (10, 10))
+        pygame.display.flip()
