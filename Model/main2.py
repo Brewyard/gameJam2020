@@ -38,11 +38,11 @@ clock = pygame.time.Clock()
 
 if os.stat("../highscore.txt").st_size == 0:
     f = open('../highscore.txt','w')
-    f.write('2')
+    f.write('0')
     f.close()
 if os.stat("../highscore2.txt").st_size == 0:
     f = open('../highscore2.txt','w')
-    f.write('1')
+    f.write('0')
     f.close()
 if os.stat("../highscore3.txt").st_size == 0:
     f = open('../highscore3.txt','w')
@@ -212,7 +212,7 @@ while run:
                                     selectorLevels += 1
                             elif e.key == pygame.K_RETURN and selectorLevels == 1: #on a choisit le niveau facile, tant que l'on joue rien sinon game over
                                 music_Menu.stop()
-                                difficulte = 0.5
+                                difficulte = 1
                                 res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
@@ -221,7 +221,7 @@ while run:
                             #  ici direction draw_levels
                             elif e.key == pygame.K_RETURN and selectorLevels == 2:
                                 music_Menu.stop()
-                                difficulte= 1
+                                difficulte= 2
                                 res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
@@ -229,14 +229,14 @@ while run:
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 3:
                                 music_Menu.stop()
-                                difficulte = 2
+                                difficulte = 3
                                 res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()
                                     break
                             elif e.key == pygame.K_RETURN and selectorLevels == 4:
                                 music_Menu.stop()
-                                difficulte = 4
+                                difficulte = 5
                                 res = playing(difficulte)
                                 if not res: ##on arrive sur la page game over si jeu finit
                                     gameOver()

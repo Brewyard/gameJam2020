@@ -48,7 +48,10 @@ jeu = False
 # generation de sons
 bubble_pop = pygame.mixer.Sound('../Sounds/bubble-pop.wav')
 windy_today = pygame.mixer.Sound('../Sounds/wind.wav')
+windy_today.set_volume(0.1)
 background_music = pygame.mixer.Sound('../Sounds/Play.wav')
+bird_sound = pygame.mixer.Sound("../Sounds/Oiseaux.wav")
+
 
 # chargement du jeu
 clock = pygame.time.Clock()
@@ -305,8 +308,7 @@ def playing(difficulte):
     while launch:
         en_jeu = True
         global score
-        print(score)
-
+        score = score +  difficulte
         clock.tick(60)
         dt = clock.tick(60) / 1000
         # game.menu(screen)
@@ -362,6 +364,8 @@ def playing(difficulte):
             if bird.touch(game.player.rect):
                 # gameover
                 background_music.stop()
+                bird_sound.set_volume(1)
+                bird_sound.play()
                 en_jeu = False
                 # game.player.resetPlayer()
                 # game.resetGame()
@@ -469,12 +473,15 @@ def playing(difficulte):
             text1('PAUSE', 200, 200, 90, 120, 120, 120)
             pygame.display.flip()
             reprendre = False
+            #music_pause = pygame.mixer.Sound('../Sounds/Pause.wav')
+            #music_pause.play()
             while not reprendre:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         exit()
                     elif event.type == pygame.KEYDOWN:
+                        #music_pause.stop()
                         reprendre = True
                         game.pressed[pygame.K_RETURN] = False
 
